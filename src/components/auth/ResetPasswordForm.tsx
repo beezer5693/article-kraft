@@ -4,17 +4,17 @@ import { useResetPasswordForm } from "@/hooks/useForm";
 import { cn } from "@/lib/utils";
 import {
   checkConfirmPasswordMatchesPassword,
-  fieldHasError,
+  getFieldErrorStyle,
   isPasswordGreaterThanEightChars,
-} from "@/utils/form/form-utils";
+} from "@/lib/form-helpers";
 import { useState } from "react";
-import { HiCheck, HiCheckCircle, HiOutlineCheckCircle } from "react-icons/hi";
+import { HiCheckCircle } from "react-icons/hi";
+import { Collapsible, CollapsibleContent } from "../ui/collapsible";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
-import { Collapsible, CollapsibleContent } from "../ui/collapsible";
 
 type ResetPasswordFormProps = {
   code: string;
@@ -26,7 +26,7 @@ export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
   const [isConfirmPasswordOpen, setIsConfirmPasswordOpen] = useState(false);
 
-  const { form, onSubmit, isLoading } = useResetPasswordForm(code);
+  const { form, onSubmit, isSubmitting } = useResetPasswordForm(code);
 
   return (
     <Form {...form}>
@@ -40,9 +40,9 @@ export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
               <FormControl className="mt-1">
                 <div className="relative">
                   <Input
-                    className={cn(fieldHasError(form, field))}
+                    className={cn(getFieldErrorStyle(form, field))}
                     onFocus={() => setIsPasswordOpen(true)}
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                     placeholder="••••••••"
                     type={isPasswordVisible ? "text" : "password"}
                     {...field}
@@ -64,12 +64,13 @@ export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
                     <HiCheckCircle
                       size={16}
                       className={cn("text-foreground/40 dark:text-foreground/30", {
-                        "text-green-600 dark:text-green-700": isPasswordGreaterThanEightChars(form),
+                        "text-green-600 dark:text-green-600": isPasswordGreaterThanEightChars(form),
                       })}
                     />
                     <FormDescription
                       className={cn("text-foreground/40 dark:text-foreground/30 font-medium", {
-                        "text-green-600 dark:text-green-700": isPasswordGreaterThanEightChars(form),
+                        "text-foreground/70 dark:text-foreground/80":
+                          isPasswordGreaterThanEightChars(form),
                       })}
                     >
                       Must be at least 8 characters
@@ -89,10 +90,10 @@ export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
               <FormControl className="mt-1">
                 <div className="relative">
                   <Input
-                    className={cn(fieldHasError(form, field))}
+                    className={cn(getFieldErrorStyle(form, field))}
                     onFocus={() => setIsConfirmPasswordOpen(true)}
-                    disabled={isLoading}
                     placeholder="••••••••"
+                    disabled={isSubmitting}
                     type={isConfirmPasswordVisible ? "text" : "password"}
                     {...field}
                   />
@@ -113,13 +114,13 @@ export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
                     <HiCheckCircle
                       size={16}
                       className={cn("text-foreground/40 dark:text-foreground/30", {
-                        "text-green-600 dark:text-green-700":
+                        "text-green-600 dark:text-green-600":
                           checkConfirmPasswordMatchesPassword(form),
                       })}
                     />
                     <FormDescription
                       className={cn("text-foreground/40 dark:text-foreground/30 font-medium", {
-                        "text-green-600 dark:text-green-700":
+                        "text-foreground/70 dark:text-foreground/80":
                           checkConfirmPasswordMatchesPassword(form),
                       })}
                     >
@@ -131,7 +132,11 @@ export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
             </FormItem>
           )}
         />
-        <FormSubmissionButton className="mt-6" variant={"RESET_PASSWORD"} isLoading={isLoading} />
+        <FormSubmissionButton
+          className="mt-6"
+          variant={"RESET_PASSWORD"}
+          isLoading={isSubmitting}
+        />
       </form>
     </Form>
   );

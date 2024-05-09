@@ -2,14 +2,14 @@
 
 import { useForgotPasswordForm } from "@/hooks/useForm";
 import { cn } from "@/lib/utils";
-import { fieldHasError } from "@/utils/form/form-utils";
+import { getFieldErrorStyle } from "@/lib/form-helpers";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 
 export default function ForgotPasswordForm() {
-  const { form, onSubmit, isLoading } = useForgotPasswordForm();
+  const { form, onSubmit, isSubmitting, isSuccess } = useForgotPasswordForm();
 
   return (
     <Form {...form}>
@@ -22,9 +22,9 @@ export default function ForgotPasswordForm() {
               <FormLabel>Email address</FormLabel>
               <FormControl className="mt-1">
                 <Input
-                  className={cn(fieldHasError(form, field))}
+                  className={cn(getFieldErrorStyle(form, field))}
                   placeholder="you@example.com"
-                  disabled={isLoading}
+                  disabled={isSubmitting || isSuccess}
                   {...field}
                 />
               </FormControl>
@@ -32,7 +32,13 @@ export default function ForgotPasswordForm() {
             </FormItem>
           )}
         />
-        <FormSubmissionButton className="mt-5" variant={"FORGOT_PASSWORD"} isLoading={isLoading} />
+        <FormSubmissionButton
+          className={cn("mt-5", {
+            "opacity-50 pointer-events-none": isSuccess,
+          })}
+          variant={"FORGOT_PASSWORD"}
+          isLoading={isSubmitting}
+        />
       </form>
     </Form>
   );

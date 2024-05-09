@@ -11,12 +11,17 @@ export const loginFormSchema: ZodType<LoginFormSchema> = z.object({
 });
 
 export type SignupFormSchema = {
+  full_name: string;
   email: string;
   password: string;
 };
 
 export const signupFormSchema: ZodType<SignupFormSchema> = z
   .object({
+    full_name: z
+      .string()
+      .min(1, "Full name is a required field")
+      .refine((value) => /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/.test(value), "First and last name required"),
     email: z.string().min(1, "Email is a required field").email("Enter a valid email address"),
     password: z
       .string()

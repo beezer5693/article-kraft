@@ -2,7 +2,7 @@
 
 import { useLoginForm } from "@/hooks/useForm";
 import { cn } from "@/lib/utils";
-import { fieldHasError } from "@/utils/form/form-utils";
+import { getFieldErrorStyle } from "@/lib/form-helpers";
 import Link from "next/link";
 import { useState } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
@@ -13,7 +13,7 @@ import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 
 export default function LogInForm() {
   const [isVisible, setIsVisible] = useState(false);
-  const { form, onSubmit, isLoading } = useLoginForm();
+  const { form, onSubmit, isSubmitting } = useLoginForm();
 
   return (
     <Form {...form}>
@@ -26,9 +26,9 @@ export default function LogInForm() {
               <FormLabel>Email address</FormLabel>
               <FormControl className="mt-1">
                 <Input
-                  className={cn(fieldHasError(form, field))}
+                  className={cn(getFieldErrorStyle(form, field))}
                   placeholder="you@example.com"
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                   {...field}
                 />
               </FormControl>
@@ -50,11 +50,11 @@ export default function LogInForm() {
                   Forgot Password?
                 </Link>
               </div>
-              <FormControl className="mt-0.5">
-                <div className="relative">
+              <FormControl>
+                <div className="relative mt-1">
                   <Input
-                    className={cn(fieldHasError(form, field))}
-                    disabled={isLoading}
+                    className={cn(getFieldErrorStyle(form, field))}
+                    disabled={isSubmitting}
                     placeholder="••••••••"
                     type={isVisible ? "text" : "password"}
                     {...field}
@@ -66,7 +66,7 @@ export default function LogInForm() {
             </FormItem>
           )}
         />
-        <FormSubmissionButton className="mt-6" variant={"LOG_IN"} isLoading={isLoading} />
+        <FormSubmissionButton className="mt-6" variant={"LOG_IN"} isLoading={isSubmitting} />
       </form>
     </Form>
   );

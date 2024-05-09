@@ -1,6 +1,6 @@
-import { useFormSubmissionButtonText } from "@/hooks/useForm";
+import { FormVariant } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { FormVariant } from "@/types/types";
+import { getFormSubmissionButtonText } from "@/lib/form-helpers";
 import { CgSpinner } from "react-icons/cg";
 import { Button } from "../ui/button";
 
@@ -15,7 +15,7 @@ export default function FormSubmissionButton({
   isLoading,
   className,
 }: FormSubmissionButtonProps) {
-  const { buttonText } = useFormSubmissionButtonText(variant, isLoading);
+  const { buttonText } = getFormSubmissionButtonText(variant, isLoading);
 
   return (
     <div className={cn(className)}>
