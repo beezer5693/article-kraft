@@ -1,130 +1,137 @@
 import {
-  forgotPasswordFormSchema,
-  loginFormSchema,
-  resetPasswordFormSchema,
-  signupFormSchema,
+    forgotPasswordSchema,
+    signInSchema,
+    resetPasswordSchema,
+    signUpSchema,
 } from "@/lib/form-validators";
-import { getToast } from "@/lib/get-toast";
-import { signUp } from "@/server-actions/auth/sign-up";
+import { useToast } from "@/hooks/useToast";
+import { signIn, signUp } from "@/server-actions/auth/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { useCurrentTheme } from "./useTheme";
+import {
+    TSignUpSchema,
+    TSignInSchema,
+    TForgotPasswordSchema,
+    TResetPasswordSchema,
+} from "@/lib/types";
 
 // Signup form
-export function useSignUpForm() {
-  const { theme } = useCurrentTheme() || {};
+export const useSignUpForm = () => {
+    const form = useForm<TSignUpSchema>({
+        resolver: zodResolver(signUpSchema),
+        defaultValues: {
+            full_name: "",
+            email: "",
+            password: "",
+        },
+    });
 
-  const form = useForm<z.infer<typeof signupFormSchema>>({
-    resolver: zodResolver(signupFormSchema),
-    defaultValues: {
-      full_name: "",
-      email: "",
-      password: "",
-    },
-  });
+    const onSubmit = async (values: TSignUpSchema) => {
+        try {
+            const result = await signUp(values);
 
-  const {
-    formState: { isSubmitting },
-  } = form;
-
-  async function onSubmit(values: z.infer<typeof signupFormSchema>) {
-    try {
-      const result = await signUp(values);
-
-      if (result?.error) {
-        const errors = result.error;
-
-        if (errors.email) {
-          form.setError("email", { type: "server", message: `${errors.email._errors[0]}` });
+            if (result?.errors) {
+                const { errors } = result;
+                if (errors.email) {
+                    form.setError("email", {
+                        type: "server",
+                        message: `${errors.email._errors[0]}`,
+                    });
+                }
+                if (errors.password) {
+                    form.setError("password", {
+                        type: "server",
+                        message: `${errors.password._errors[0]}`,
+                    });
+                }
+            }
+        } catch (error: any) {
+            useToast("error", error.message);
         }
-        if (errors.password) {
-          form.setError("password", { type: "server", message: `${errors.password._errors[0]}` });
-        }
-      }
-    } catch (error: any) {
-      getToast("error", error.message, theme);
-    }
-  }
+    };
 
-  return { form, isSubmitting, onSubmit };
-}
+    return { form, onSubmit };
+};
 
 // Login form
-export function useLoginForm() {
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+export const useLoginForm = () => {
+    const form = useForm<TSignInSchema>({
+        resolver: zodResolver(signInSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    });
 
-  const {
-    formState: { isSubmitting },
-  } = form;
+    const onSubmit = async (values: TSignInSchema) => {
+        try {
+            const result = await signIn(values);
 
-  async function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    try {
-      console.log(values);
-    } catch (error: any) {
-      console.log(error);
-    }
-  }
+            if (result?.errors) {
+                const { errors } = result;
+                if (errors.email) {
+                    form.setError("email", {
+                        type: "server",
+                        message: `${errors.email._errors[0]}`,
+                    });
+                }
+                if (errors.password) {
+                    form.setError("password", {
+                        type: "server",
+                        message: `${errors.password._errors[0]}`,
+                    });
+                }
+            }
+        } catch (error: any) {
+            useToast("error", error.message);
+        }
+    };
 
-  return { form, isSubmitting, onSubmit };
-}
+    return { form, onSubmit };
+};
 
 // Forgot password form
-export function useForgotPasswordForm() {
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+export const useForgotPasswordForm = () => {
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const form = useForm<z.infer<typeof forgotPasswordFormSchema>>({
-    resolver: zodResolver(forgotPasswordFormSchema),
-    defaultValues: {
-      email: "",
-    },
-  });
+    const form = useForm<TForgotPasswordSchema>({
+        resolver: zodResolver(forgotPasswordSchema),
+        defaultValues: {
+            email: "",
+        },
+    });
 
-  const {
-    formState: { isSubmitting },
-  } = form;
+    const onSubmit = async (values: TForgotPasswordSchema) => {
+        try {
+            console.log(values);
+            setIsSuccess(true);
+            form.reset();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-  async function onSubmit(values: z.infer<typeof forgotPasswordFormSchema>) {
-    try {
-      console.log(values);
-      setIsSuccess(true);
-      form.reset();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  return { form, isSubmitting, isSuccess, onSubmit };
-}
+    return { form, isSuccess, onSubmit };
+};
 
 // Reset password form
-export function useResetPasswordForm(code: string) {
-  const form = useForm<z.infer<typeof resetPasswordFormSchema>>({
-    resolver: zodResolver(resetPasswordFormSchema),
-    defaultValues: {
-      password: "",
-      confirmPassword: "",
-    },
-  });
+export const useResetPasswordForm = (code: string) => {
+    const form = useForm<TResetPasswordSchema>({
+        resolver: zodResolver(resetPasswordSchema),
+        defaultValues: {
+            password: "",
+            confirmPassword: "",
+        },
+    });
 
-  const {
-    formState: { isSubmitting },
-  } = form;
+    const onSubmit = async (values: TResetPasswordSchema) => {
+        try {
+            console.log(values);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-  async function onSubmit(values: z.infer<typeof resetPasswordFormSchema>) {
-    try {
-      console.log(values);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  return { form, isSubmitting, onSubmit };
-}
+    return { form, onSubmit };
+};

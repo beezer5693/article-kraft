@@ -1,22 +1,11 @@
-import { ZodType, z } from "zod";
+import { z } from "zod";
 
-export type LoginFormSchema = {
-  email: string;
-  password: string;
-};
-
-export const loginFormSchema: ZodType<LoginFormSchema> = z.object({
+export const signInSchema = z.object({
   email: z.string().min(1, "Email is a required field").email("Enter a valid email address"),
   password: z.string().min(1, "Password is a required field"),
 });
 
-export type SignupFormSchema = {
-  full_name: string;
-  email: string;
-  password: string;
-};
-
-export const signupFormSchema: ZodType<SignupFormSchema> = z
+export const signUpSchema = z
   .object({
     full_name: z
       .string()
@@ -39,20 +28,11 @@ export const signupFormSchema: ZodType<SignupFormSchema> = z
     }
   );
 
-export type ForgotPasswordFormSchema = {
-  email: string;
-};
-
-export const forgotPasswordFormSchema: ZodType<ForgotPasswordFormSchema> = z.object({
+export const forgotPasswordSchema = z.object({
   email: z.string().min(1, "Email is a required field").email("Enter a valid email address"),
 });
 
-export type ResetPasswordFormSchema = {
-  password: string;
-  confirmPassword: string;
-};
-
-export const resetPasswordFormSchema: ZodType<ResetPasswordFormSchema> = z
+export const resetPasswordSchema = z
   .object({
     password: z
       .string()

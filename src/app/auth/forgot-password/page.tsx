@@ -4,14 +4,16 @@ import ForgotPasswordForm from "@/components/auth/ForgotPasswordForm";
 import FormContainer from "@/components/auth/FormContainer";
 import FormHeader from "@/components/auth/FormHeader";
 
-export default function ForgotPassword() {
-  return (
-    <AuthPageContainer>
-      <FormContainer>
-        <FormHeader variant={"FORGOT_PASSWORD"} />
-        <ForgotPasswordForm />
-        <BackToLoginButton />
-      </FormContainer>
-    </AuthPageContainer>
-  );
+function ForgotPassword() {
+    return (
+        <AuthPageContainer>
+            <FormContainer>
+                <FormHeader variant={"FORGOT_PASSWORD"} />
+                <ForgotPasswordForm />
+                <BackToLoginButton />
+            </FormContainer>
+        </AuthPageContainer>
+    );
 }
+
+export default ForgotPassword;

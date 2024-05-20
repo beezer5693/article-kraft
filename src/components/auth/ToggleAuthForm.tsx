@@ -1,29 +1,40 @@
+import React from "react";
 import { FormVariant } from "@/lib/types";
 import Link from "next/link";
-import React from "react";
+import { IoMdArrowDropright } from "react-icons/io";
 
 type ToggleAuthFormProps = {
-  variant: FormVariant;
+    variant: FormVariant;
 };
 
-export default function ToggleAuthForm({ variant }: ToggleAuthFormProps) {
-  return (
-    <div className="mt-4">
-      {variant === "SIGN_UP" ? (
-        <p className="text-foreground text-center text-sm">
-          Already have an account?{" "}
-          <Link className="hover:underline text-primary font-medium" href={"/auth/login"}>
-            Log in
-          </Link>
-        </p>
-      ) : (
-        <p className="text-foreground text-center text-sm">
-          Don&apos;t have an account?{" "}
-          <Link className="hover:underline text-primary font-medium" href={"/auth/sign-up"}>
-            Sign up
-          </Link>
-        </p>
-      )}
-    </div>
-  );
-}
+const ToggleAuthForm = ({ variant }: ToggleAuthFormProps) => {
+    return (
+        <div className="relative">
+            {variant === "SIGN_UP" ? (
+                <p className="text-foreground text-center text-sm">
+                    Already have an account?{" "}
+                    <Link
+                        className="hover:underline hover:text-orange-600 text-link inline-flex items-center"
+                        href={"/auth/sign-in"}
+                    >
+                        <span>Sign in</span>
+                        <IoMdArrowDropright className="h-3 w-3 mt-0.5" />
+                    </Link>
+                </p>
+            ) : (
+                <p className="text-foreground text-center text-sm">
+                    Don&apos;t have an account?{" "}
+                    <Link
+                        className="hover:underline hover:text-orange-600 text-link inline-flex items-center"
+                        href={"/auth/sign-up"}
+                    >
+                        <span>Sign up</span>
+                        <IoMdArrowDropright className="h-3 w-3 mt-0.5" />
+                    </Link>
+                </p>
+            )}
+        </div>
+    );
+};
+
+export default ToggleAuthForm;
