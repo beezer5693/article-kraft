@@ -4,7 +4,6 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/lib/constants";
 import { signInSchema, signUpSchema } from "@/lib/form-validators";
 import { formatName } from "@/lib/format-name";
 import { StoreTokenRequest, TSignInSchema, TSignUpSchema } from "@/lib/types";
-import { access } from "fs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

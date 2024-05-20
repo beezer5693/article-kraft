@@ -18,6 +18,8 @@ import {
 
 // Signup form
 export const useSignUpForm = () => {
+    const { getToast } = useToast();
+
     const form = useForm<TSignUpSchema>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
@@ -47,7 +49,7 @@ export const useSignUpForm = () => {
                 }
             }
         } catch (error: any) {
-            useToast("error", error.message);
+            getToast("error", error.message);
         }
     };
 
@@ -56,6 +58,8 @@ export const useSignUpForm = () => {
 
 // Login form
 export const useLoginForm = () => {
+    const { getToast } = useToast();
+
     const form = useForm<TSignInSchema>({
         resolver: zodResolver(signInSchema),
         defaultValues: {
@@ -84,7 +88,7 @@ export const useLoginForm = () => {
                 }
             }
         } catch (error: any) {
-            useToast("error", error.message);
+            getToast("error", error.message);
         }
     };
 

@@ -1,4 +1,4 @@
-import { getSession, signOut } from "@/server-actions/auth/actions";
+import { getSession } from "@/server-actions/auth/actions";
 import axios from "axios";
 
 const interceptor = axios.create({
