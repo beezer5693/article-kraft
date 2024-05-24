@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { UseFormReturn } from "react-hook-form";
-import { FaExclamation } from "react-icons/fa";
+import { MdOutlineErrorOutline } from "react-icons/md";
 import { FormMessage } from "../ui/form";
 
 type ErrorMessageProps = {
@@ -11,11 +11,11 @@ type ErrorMessageProps = {
 const ErrorMessage = ({ form, field }: ErrorMessageProps) => {
     return (
         <div
-            className={cn("hidden items-center gap-0.5 mt-1", {
+            className={cn("hidden items-center gap-1 mt-1", {
                 flex: form.getFieldState<any>(field)?.error,
             })}
         >
-            <FaExclamation className="text-destructive h-2.5 w-2.5" />
+            <MdOutlineErrorOutline className="text-destructive h-3.5 w-3.5" />
             <FormMessage />
         </div>
     );

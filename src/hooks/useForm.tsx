@@ -1,25 +1,22 @@
+import { getFormErrorsFromServerAction } from "@/lib/form-helpers";
 import {
     forgotPasswordSchema,
-    signInSchema,
+    loginSchema,
     resetPasswordSchema,
     signUpSchema,
 } from "@/lib/form-validators";
-import { useToast } from "@/hooks/useToast";
-import { signIn, signUp } from "@/server-actions/auth/actions";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import {
-    TSignUpSchema,
-    TSignInSchema,
     TForgotPasswordSchema,
+    TLoginSchema,
     TResetPasswordSchema,
+    TSignUpSchema,
 } from "@/lib/types";
+import { login, signup } from "@/server-actions/auth/actions";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 // Signup form
-export const useSignUpForm = () => {
-    const { getToast } = useToast();
-
+export const useSignupForm = () => {
     const form = useForm<TSignUpSchema>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
@@ -29,27 +26,12 @@ export const useSignUpForm = () => {
         },
     });
 
-    const onSubmit = async (values: TSignUpSchema) => {
-        try {
-            const result = await signUp(values);
+    const onSubmit: SubmitHandler<TSignUpSchema> = async (values) => {
+        const result = await signup(values);
 
-            if (result?.errors) {
-                const { errors } = result;
-                if (errors.email) {
-                    form.setError("email", {
-                        type: "server",
-                        message: `${errors.email._errors[0]}`,
-                    });
-                }
-                if (errors.password) {
-                    form.setError("password", {
-                        type: "server",
-                        message: `${errors.password._errors[0]}`,
-                    });
-                }
-            }
-        } catch (error: any) {
-            getToast("error", error.message);
+        if (result?.errors) {
+            const { errors } = result;
+            getFormErrorsFromServerAction(errors, form);
         }
     };
 
@@ -58,47 +40,27 @@ export const useSignUpForm = () => {
 
 // Login form
 export const useLoginForm = () => {
-    const { getToast } = useToast();
-
-    const form = useForm<TSignInSchema>({
-        resolver: zodResolver(signInSchema),
+    const form = useForm<TLoginSchema>({
+        resolver: zodResolver(loginSchema),
         defaultValues: {
             email: "",
             password: "",
         },
     });
 
-    const onSubmit = async (values: TSignInSchema) => {
-        try {
-            const result = await signIn(values);
+    const onSubmit: SubmitHandler<TLoginSchema> = async (values) => {
+        const result = await login(values);
 
-            if (result?.errors) {
-                const { errors } = result;
-                if (errors.email) {
-                    form.setError("email", {
-                        type: "server",
-                        message: `${errors.email._errors[0]}`,
-                    });
-                }
-                if (errors.password) {
-                    form.setError("password", {
-                        type: "server",
-                        message: `${errors.password._errors[0]}`,
-                    });
-                }
-            }
-        } catch (error: any) {
-            getToast("error", error.message);
+        if (result?.errors) {
+            const { errors } = result;
+            getFormErrorsFromServerAction(errors, form);
         }
     };
 
     return { form, onSubmit };
 };
 
-// Forgot password form
 export const useForgotPasswordForm = () => {
-    const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
     const form = useForm<TForgotPasswordSchema>({
         resolver: zodResolver(forgotPasswordSchema),
         defaultValues: {
@@ -106,21 +68,14 @@ export const useForgotPasswordForm = () => {
         },
     });
 
-    const onSubmit = async (values: TForgotPasswordSchema) => {
-        try {
-            console.log(values);
-            setIsSuccess(true);
-            form.reset();
-        } catch (error) {
-            console.log(error);
-        }
+    const onSubmit: SubmitHandler<TForgotPasswordSchema> = async (values) => {
+        console.log("Forgot password form submitted", values);
     };
 
-    return { form, isSuccess, onSubmit };
+    return { form, onSubmit };
 };
 
-// Reset password form
-export const useResetPasswordForm = (code: string) => {
+export const useResetPasswordForm = () => {
     const form = useForm<TResetPasswordSchema>({
         resolver: zodResolver(resetPasswordSchema),
         defaultValues: {
@@ -129,12 +84,8 @@ export const useResetPasswordForm = (code: string) => {
         },
     });
 
-    const onSubmit = async (values: TResetPasswordSchema) => {
-        try {
-            console.log(values);
-        } catch (error) {
-            console.log(error);
-        }
+    const onSubmit: SubmitHandler<TResetPasswordSchema> = async (values: TResetPasswordSchema) => {
+        console.log("Reset password form submitted", values);
     };
 
     return { form, onSubmit };

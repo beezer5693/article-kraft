@@ -1,15 +1,5 @@
-"use client";
-
-import { useSession } from "@/hooks/useSession";
-
-const Dashboard = () => {
-    const { session } = useSession();
-
-    return (
-        <div className="min-h-screen flex flex-col items-center justify-center">
-            {session && session.data.user.email}
-        </div>
-    );
+const Dashboard = async () => {
+    return <div className="min-h-screen flex flex-col items-center justify-center"></div>;
 };
 
 export default Dashboard;

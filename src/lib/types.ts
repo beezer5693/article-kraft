@@ -1,15 +1,15 @@
 import { z } from "zod";
 import {
-    signInSchema,
     signUpSchema,
     forgotPasswordSchema,
     resetPasswordSchema,
+    loginSchema,
 } from "./form-validators";
 import { ControllerRenderProps, FieldValues, UseFormReturn } from "react-hook-form";
 
 export type FormVariant = "SIGN_UP" | "SIGN_IN" | "FORGOT_PASSWORD" | "RESET_PASSWORD";
 
-export type TSignInSchema = z.infer<typeof signInSchema>;
+export type TLoginSchema = z.infer<typeof loginSchema>;
 
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
 
@@ -22,6 +22,6 @@ export type Field = ControllerRenderProps<FieldValues, string>;
 export type Form = UseFormReturn<any, any, undefined>;
 
 export type StoreTokenRequest = {
-    access_token: string;
-    refresh_token: string;
+    accessToken: string;
+    refreshToken: string;
 };

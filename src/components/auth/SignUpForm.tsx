@@ -1,8 +1,7 @@
 "use client";
 
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
-import { useSignUpForm } from "@/hooks/useForm";
-import { cn } from "@/lib/utils";
+import { useSignupForm } from "@/hooks/useForm";
 import {
     applyFullNameFormatting,
     checkForEmailInPassword,
@@ -10,19 +9,20 @@ import {
     isFieldDirty,
     isPasswordGreaterThanEightChars,
 } from "@/lib/form-helpers";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { MdCheckCircleOutline } from "react-icons/md";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
-import { PiCheckFatFill } from "react-icons/pi";
 
 const SignUpForm = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
-    const { form, onSubmit } = useSignUpForm();
+    const { form, onSubmit } = useSignupForm();
     const { isSubmitting } = form.formState;
 
     return (
@@ -95,41 +95,35 @@ const SignUpForm = () => {
                             >
                                 <CollapsibleContent className="CollapsibleContent">
                                     <div className="flex items-center gap-1">
-                                        <PiCheckFatFill
-                                            className={cn("text-foreground/30 h-[11px] w-[11px]", {
+                                        <MdCheckCircleOutline
+                                            className={cn("text-foreground/30 h-3.5 w-3.5", {
                                                 "text-green-600":
                                                     isPasswordGreaterThanEightChars(form),
                                             })}
                                         />
                                         <FormDescription
-                                            className={cn(
-                                                "text-foreground/40 dark:text-foreground/30 font-medium",
-                                                {
-                                                    "text-foreground/65":
-                                                        isPasswordGreaterThanEightChars(form),
-                                                }
-                                            )}
+                                            className={cn("text-foreground/40 font-medium", {
+                                                "text-foreground/65":
+                                                    isPasswordGreaterThanEightChars(form),
+                                            })}
                                         >
                                             Must be at least 8 characters
                                         </FormDescription>
                                     </div>
                                     <div className="flex items-center gap-1">
-                                        <PiCheckFatFill
-                                            className={cn("text-foreground/30 h-[11px] w-[11px]", {
+                                        <MdCheckCircleOutline
+                                            className={cn("text-foreground/30 h-3.5 w-3.5", {
                                                 "text-green-600":
                                                     isFieldDirty(form, "password") &&
                                                     !checkForEmailInPassword(form),
                                             })}
                                         />
                                         <FormDescription
-                                            className={cn(
-                                                "text-foreground/40 dark:text-foreground/30 font-medium",
-                                                {
-                                                    "text-foreground/65":
-                                                        isFieldDirty(form, "password") &&
-                                                        !checkForEmailInPassword(form),
-                                                }
-                                            )}
+                                            className={cn("text-foreground/40 font-medium", {
+                                                "text-foreground/65":
+                                                    isFieldDirty(form, "password") &&
+                                                    !checkForEmailInPassword(form),
+                                            })}
                                         >
                                             Does not contain your email
                                         </FormDescription>
@@ -140,7 +134,7 @@ const SignUpForm = () => {
                     )}
                 />
                 <FormSubmissionButton
-                    className="mt-4"
+                    className="mt-6"
                     variant="SIGN_UP"
                     isSubmitting={isSubmitting}
                 />

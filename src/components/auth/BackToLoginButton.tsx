@@ -6,10 +6,10 @@ const BackToLoginButton = () => {
     return (
         <Link
             className="mx-auto mt-4 inline-flex items-center hover:underline text-sm text-link hover:text-orange-600"
-            href={"/auth/sign-in"}
+            href={"/login"}
         >
             <IoMdArrowDropleft className="h-3 w-3 mt-0.5" />
-            <span>Back to Sign in</span>
+            <span>Back to Login</span>
         </Link>
     );
 };

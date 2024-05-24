@@ -1,153 +1,101 @@
 "use server";
 
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/lib/constants";
-import { signInSchema, signUpSchema } from "@/lib/form-validators";
-import { formatName } from "@/lib/format-name";
-import { StoreTokenRequest, TSignInSchema, TSignUpSchema } from "@/lib/types";
+import { PATH, SESSION_TOKEN } from "@/lib/constants";
+import { extractTokenFromHeader } from "@/lib/extract-token";
+import { loginSchema, signUpSchema } from "@/lib/form-validators";
+import { seperateFullNameIntoFirstAndLastName } from "@/lib/format-name";
+import { TLoginSchema, TSignUpSchema } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-// Sign up a new user
-export const signUp = async (values: TSignUpSchema) => {
-    const { error } = signUpSchema.safeParse(values);
+const BACKEND_URL = process.env.BACKEND_URL;
+
+export const login = async (values: TLoginSchema) => {
+    const { error } = loginSchema.safeParse(values);
     if (error) {
         return { errors: error.format() };
     }
 
-    const [firstName, lastName] = values.full_name.split(" ");
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/register`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            first_name: formatName(firstName),
-            last_name: formatName(lastName),
-            email: values.email.trim().toLowerCase(),
-            password: values.password.trim(),
-        }),
-        credentials: "include",
-    });
-
-    const data = await response.json();
-
-    if (response.status === 409) {
-        throw new Error(data.message);
-    }
-
-    if (!response.ok) {
-        throw new Error("Uh oh! Something went wrong. Please try again.");
-    }
-
-    const { data: responseData } = data;
-
-    console.log("responseData: ", responseData);
-
-    await storeTokens(responseData);
-
-    revalidatePath(`/dashboard/${responseData.user.user_id}`, "layout");
-    redirect(`/dashboard/${responseData.user.user_id}`);
-};
-
-// Sign in a user
-export const signIn = async (values: TSignInSchema) => {
-    const { error } = signInSchema.safeParse(values);
-    if (error) {
-        return { errors: error.format() };
-    }
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            email: values.email.trim().toLowerCase(),
-            password: values.password.trim(),
-        }),
-        credentials: "include",
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(data.message);
-    }
-
-    const { data: responseData } = data;
-
-    await storeTokens(responseData);
-
-    revalidatePath(`/dashboard/${responseData.user.user_id}`, "layout");
-    redirect(`/dashboard/${responseData.user.user_id}`);
-};
-
-export const signOut = async () => {
-    cookies().delete(ACCESS_TOKEN);
-    cookies().delete(REFRESH_TOKEN);
-};
-
-export const getSession = async () => {
-    console.log("Getting session...");
-    const accessToken = cookies().get(ACCESS_TOKEN)?.value;
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users`, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-    });
-
-    if (response.status === 401) {
-        const data = await refreshAccessToken();
-        await storeTokens(data);
-    }
-
-    const token = {
-        access_token: cookies().get(ACCESS_TOKEN)?.value,
+    const formValues = {
+        email: values.email.trim().toLowerCase(),
+        password: values.password.trim(),
     };
 
-    return token;
-};
-
-export const refreshAccessToken = async () => {
-    console.log("Refreshing access token...");
-    const refreshToken = cookies().get(REFRESH_TOKEN)?.value;
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/refresh`, {
-        method: "GET",
+    const response = await fetch(`${BACKEND_URL}/api/v1/auth/login`, {
+        method: "POST",
         headers: {
-            Authorization: `Bearer ${refreshToken}`,
+            "Content-Type": "application/json",
         },
+        body: JSON.stringify(formValues),
+        credentials: "include",
     });
 
-    const data = await response.json();
+    const jsonData = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message);
+        redirect(`/login?error=true&message=${jsonData.message}`);
     }
 
     const {
-        data: { access_token, refresh_token },
-    } = data;
+        data: { user },
+    } = jsonData;
 
-    return { access_token, refresh_token };
+    cookies().set({
+        name: SESSION_TOKEN,
+        value: extractTokenFromHeader(response.headers),
+        path: PATH,
+        httpOnly: true,
+        secure: false,
+    });
+
+    revalidatePath(`/dashboard/${user.user_id}`, "layout");
+    redirect(`/dashboard/${user.user_id}`);
 };
 
-export const storeTokens = async (request: StoreTokenRequest) => {
-    const { access_token, refresh_token } = request;
+export const signup = async (values: TSignUpSchema) => {
+    const { error } = signUpSchema.safeParse({ ...values, email: 11111111 });
+    if (error) {
+        return { errors: error.format() };
+    }
 
-    cookies().set(ACCESS_TOKEN, access_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
+    const [first_name, last_name] = seperateFullNameIntoFirstAndLastName(values.full_name);
+    const formValues = {
+        first_name,
+        last_name,
+        email: values.email.trim().toLowerCase(),
+        password: values.password.trim(),
+    };
+
+    const response = await fetch(`${BACKEND_URL}/api/v1/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
     });
 
-    cookies().set(REFRESH_TOKEN, refresh_token, {
+    const jsonData = await response.json();
+
+    if (response.status === 409) {
+        redirect(`/signup?error=true&message=${jsonData.message}`);
+    }
+    if (!response.ok) {
+        redirect(`/signup?error=true&message=Uh oh! Something went wrong. Please try again.`);
+    }
+
+    const {
+        data: { user },
+    } = jsonData;
+
+    cookies().set({
+        name: SESSION_TOKEN,
+        value: extractTokenFromHeader(response.headers),
+        path: PATH,
         httpOnly: true,
-        secure: true,
-        sameSite: "lax",
+        secure: false,
     });
+
+    revalidatePath(`/dashboard/${user.user_id}`, "layout");
+    redirect(`/dashboard/${user.user_id}`);
 };

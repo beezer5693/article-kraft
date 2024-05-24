@@ -8,7 +8,7 @@ import {
 } from "@/lib/form-helpers";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { PiCheckFatFill } from "react-icons/pi";
+import { FaCheck } from "react-icons/fa6";
 import { Collapsible, CollapsibleContent } from "../ui/collapsible";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
@@ -16,17 +16,13 @@ import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 
-type ResetPasswordFormProps = {
-    code: string;
-};
-
-const ResetPasswordForm = ({ code }: ResetPasswordFormProps) => {
+const ResetPasswordForm = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const [isPasswordOpen, setIsPasswordOpen] = useState(false);
     const [isConfirmPasswordOpen, setIsConfirmPasswordOpen] = useState(false);
 
-    const { form, onSubmit } = useResetPasswordForm(code);
+    const { form, onSubmit } = useResetPasswordForm();
     const { isSubmitting } = form.formState;
 
     return (
@@ -62,8 +58,8 @@ const ResetPasswordForm = ({ code }: ResetPasswordFormProps) => {
                             >
                                 <CollapsibleContent className="CollapsibleContent">
                                     <div className="flex items-center gap-1">
-                                        <PiCheckFatFill
-                                            className={cn("text-foreground/30 h-[11px] w-[11px]", {
+                                        <FaCheck
+                                            className={cn("text-foreground/30 h-3 w-3", {
                                                 "text-green-600":
                                                     isPasswordGreaterThanEightChars(form),
                                             })}
@@ -112,8 +108,8 @@ const ResetPasswordForm = ({ code }: ResetPasswordFormProps) => {
                             >
                                 <CollapsibleContent className="CollapsibleContent">
                                     <div className="flex items-center gap-1">
-                                        <PiCheckFatFill
-                                            className={cn("text-foreground/30 h-[11px] w-[11px]", {
+                                        <FaCheck
+                                            className={cn("text-foreground/30 h-3 w-3", {
                                                 "text-green-600":
                                                     checkConfirmPasswordMatchesPassword(form),
                                             })}

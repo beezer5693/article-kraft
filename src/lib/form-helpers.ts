@@ -1,11 +1,13 @@
 import { Field, Form, FormVariant } from "@/lib/types";
 import { ChangeEvent } from "react";
+import { UseFormReturn } from "react-hook-form";
+import { ZodFormattedError } from "zod";
 
 export const getFieldErrorStyle = (form: Form, field: Field): string => {
     const fieldState = form.getFieldState(field.name) || {};
     const fieldError = fieldState.error || fieldState.invalid;
     return fieldError
-        ? "border-destructive shadow-[inset_0px_0px_0px_1px_rgba(204,12,57,1)] focus:border-destructive focus:shadow-[0px_0px_0px_3px_rgb(196,0,0,0.2),inset_0px_0px_0px_1px_rgba(204,12,57,1)]"
+        ? "border-destructive shadow-[inset_0px_0px_0px_1px_rgba(204,12,57,1)] focus:border-destructive focus:shadow-[0px_0px_0px_3px_rgb(196,0,0,0.2),inset_0px_0px_0px_1px_rgba(204,12,57,0)]"
         : "";
 };
 
@@ -94,4 +96,35 @@ export const applyFullNameFormatting = (e: ChangeEvent<HTMLInputElement>, field:
     const { value } = e.target;
     field.onChange(formatFullName(value));
     return e.target.value.trim();
+};
+
+export const getFormErrorsFromServerAction = (
+    errors: ZodFormattedError<
+        {
+            full_name: string;
+            email: string;
+            password: string;
+        },
+        string
+    >,
+    form: UseFormReturn<any, any, undefined>
+) => {
+    if (errors.full_name) {
+        form.setError("full_name", {
+            type: "server",
+            message: `${errors.full_name._errors[0]}`,
+        });
+    }
+    if (errors.email) {
+        form.setError("email", {
+            type: "server",
+            message: `${errors.email._errors[0]}`,
+        });
+    }
+    if (errors.password) {
+        form.setError("password", {
+            type: "server",
+            message: `${errors.password._errors[0]}`,
+        });
+    }
 };

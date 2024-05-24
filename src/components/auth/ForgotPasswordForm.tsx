@@ -9,7 +9,7 @@ import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 
 const ForgotPasswordForm = () => {
-    const { form, onSubmit, isSuccess } = useForgotPasswordForm();
+    const { form, onSubmit } = useForgotPasswordForm();
     const { isSubmitting } = form.formState;
 
     return (
@@ -25,7 +25,7 @@ const ForgotPasswordForm = () => {
                                 <Input
                                     className={cn(getFieldErrorStyle(form, field))}
                                     placeholder="you@example.com"
-                                    disabled={isSubmitting || isSuccess}
+                                    disabled={isSubmitting}
                                     {...field}
                                 />
                             </FormControl>
@@ -34,9 +34,7 @@ const ForgotPasswordForm = () => {
                     )}
                 />
                 <FormSubmissionButton
-                    className={cn("mt-5", {
-                        "opacity-50 pointer-events-none": isSuccess,
-                    })}
+                    className={cn("mt-6")}
                     variant={"FORGOT_PASSWORD"}
                     isSubmitting={isSubmitting}
                 />

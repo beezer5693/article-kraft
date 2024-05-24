@@ -4,7 +4,7 @@ import { Close } from "@/components/icons/close";
 export const useToast = () => {
     const getToast = (type: ToastType, message: string) => {
         const toastContent = (t: any) => (
-            <span className="mr-3">
+            <span className="py-1 mr-auto">
                 {message}
                 <div className="absolute top-1 right-1 p-0.5 rounded transition-all hover:bg-neutral-200/70 flex items-center justify-center">
                     <div className="text-foreground" onClick={() => toast.dismiss(t.id)}>
@@ -21,10 +21,12 @@ export const useToast = () => {
                     style: {
                         backgroundColor: "#ffffff0",
                         color: "#1F2937",
-                        border: "1px solid #a1a1aa40",
+                        border: "1px solid #dddddd",
                         fontSize: ".85rem",
-                        fontWeight: 500,
+                        fontWeight: 400,
                         maxWidth: "350px",
+                        minWidth: "250px",
+                        boxShadow: "0 0 10px 0 #a1a1aa60",
                     },
                 });
             }
@@ -34,10 +36,12 @@ export const useToast = () => {
                     style: {
                         backgroundColor: "#ffffff0",
                         color: "#1F2937",
-                        border: "1px solid #a1a1aa40",
+                        border: "1px solid #dddddd",
                         fontSize: ".85rem",
-                        fontWeight: 500,
+                        fontWeight: 400,
                         maxWidth: "350px",
+                        minWidth: "250px",
+                        boxShadow: "0 0 10px 0 #a1a1aa60",
                     },
                 });
             }

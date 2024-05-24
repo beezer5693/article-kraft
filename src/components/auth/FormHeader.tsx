@@ -11,9 +11,9 @@ const FormHeader = ({ variant }: FormHeaderProps) => {
     const { formTitle, formDescription } = getFormHeader(variant);
 
     return (
-        <div className="mb-7 w-full">
-            <h1 className="text-[1.85rem] leading-none mb-2 tracking-[-0.02em]">{formTitle}</h1>
-            <p className="text-pretty mx-auto text-sm pr-5">{formDescription}</p>
+        <div className="mb-10 w-full text-center">
+            <h1 className="text-[1.85rem] leading-none tracking-[-0.02em]">{formTitle}</h1>
+            <p className="text-pretty mt-2 px-10 mx-auto text-sm">{formDescription}</p>
         </div>
     );
 };

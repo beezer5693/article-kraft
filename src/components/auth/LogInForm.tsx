@@ -11,7 +11,7 @@ import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 
-const LogInForm = () => {
+const LoginForm = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     const { form, onSubmit } = useLoginForm();
@@ -46,8 +46,8 @@ const LogInForm = () => {
                             <div className="flex items-center pb-0.5 justify-between">
                                 <FormLabel>Password</FormLabel>
                                 <Link
-                                    className="hover:underline hover:text-orange-600 text-sm text-link"
-                                    href={"/auth/forgot-password"}
+                                    className="hover:underline hover:text-[#c45500] text-sm text-link"
+                                    href={"/forgot-password"}
                                 >
                                     Forgot your password?
                                 </Link>
@@ -72,7 +72,7 @@ const LogInForm = () => {
                     )}
                 />
                 <FormSubmissionButton
-                    className="mt-4"
+                    className="mt-6"
                     variant={"SIGN_IN"}
                     isSubmitting={isSubmitting}
                 />
@@ -81,4 +81,4 @@ const LogInForm = () => {
     );
 };
 
-export default LogInForm;
+export default LoginForm;

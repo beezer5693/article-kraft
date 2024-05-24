@@ -7,7 +7,7 @@ type PasswordVisibilityToggleProps = {
 
 const PasswordVisibilityToggle = ({ isVisible, setIsVisible }: PasswordVisibilityToggleProps) => {
     const iconStyles =
-        "text-foreground/30 h-[18px] w-[18px] group-hover:text-foreground/80 transition-all";
+        "text-foreground/30 h-[16px] w-[16px] group-hover:text-foreground/80 transition-all";
 
     const visibilityIcon = isVisible ? (
         <MdVisibility className={iconStyles} />

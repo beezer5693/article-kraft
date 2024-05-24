@@ -4,13 +4,13 @@ import { Google } from "../icons/google";
 import { Button } from "../ui/button";
 
 const GoogleAuth = () => {
-    async function handleSignInGoogle() {
+    const handleSignInGoogle = async () => {
         try {
             console.log("Sign in with Google");
         } catch (error) {
-            console.error("Error signing in with OAuth", error);
+            console.error(error);
         }
-    }
+    };
 
     return (
         <Button
@@ -20,7 +20,7 @@ const GoogleAuth = () => {
             onClick={handleSignInGoogle}
         >
             <Google className="w-[.9rem] h-[.9rem] fill-foreground" />
-            <span>Google</span>
+            <span>Continue with Google</span>
         </Button>
     );
 };
