@@ -4,10 +4,10 @@ import {
     forgotPasswordSchema,
     resetPasswordSchema,
     loginSchema,
-} from "./form-validators";
+} from "./formValidators";
 import { ControllerRenderProps, FieldValues, UseFormReturn } from "react-hook-form";
 
-export type FormVariant = "SIGN_UP" | "SIGN_IN" | "FORGOT_PASSWORD" | "RESET_PASSWORD";
+export type FormVariant = "SIGN_UP" | "LOG_IN" | "FORGOT_PASSWORD" | "RESET_PASSWORD";
 
 export type TLoginSchema = z.infer<typeof loginSchema>;
 

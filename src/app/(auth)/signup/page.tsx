@@ -4,10 +4,14 @@ import FormContainer from "@/components/auth/FormContainer";
 import FormHeader from "@/components/auth/FormHeader";
 import SignUpForm from "@/components/auth/SignUpForm";
 import ToggleAuthForm from "@/components/auth/ToggleAuthForm";
-import Logo from "@/components/shared/logo";
+import { Logo } from "@/components/shared/logo";
 import Divider from "@/components/ui/divider";
 
-const SignUp = ({ searchParams }: { searchParams: { error: string; message: string } }) => {
+export default function SignUp({
+    searchParams,
+}: {
+    searchParams: { error: string; message: string };
+}) {
     const { error, message } = searchParams;
 
     return (
@@ -22,6 +26,4 @@ const SignUp = ({ searchParams }: { searchParams: { error: string; message: stri
             </FormContainer>
         </AuthPageContainer>
     );
-};
-
-export default SignUp;
+}

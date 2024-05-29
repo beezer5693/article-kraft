@@ -7,11 +7,11 @@ export default async function Home() {
             <h1 className="text-3xl font-medium">Article Kraft</h1>
             <p>Enhance your article&apos;s readability and SEO by using our AI-powered tool.</p>
             <div className="flex items-center gap-3 mt-5">
-                <Link href="/auth/signup">
+                <Link href="/signup">
                     <Button>Sign up</Button>
                 </Link>
-                <Link href="/auth/login">
-                    <Button variant={"secondary"}>Sign in</Button>
+                <Link href="/login">
+                    <Button variant={"secondary"}>Log in</Button>
                 </Link>
             </div>
         </main>

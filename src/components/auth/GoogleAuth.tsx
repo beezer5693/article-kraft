@@ -3,7 +3,7 @@
 import { Google } from "../icons/google";
 import { Button } from "../ui/button";
 
-const GoogleAuth = () => {
+export default function GoogleAuth() {
     const handleSignInGoogle = async () => {
         try {
             console.log("Sign in with Google");
@@ -23,6 +23,4 @@ const GoogleAuth = () => {
             <span>Continue with Google</span>
         </Button>
     );
-};
-
-export default GoogleAuth;
+}

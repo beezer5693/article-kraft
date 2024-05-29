@@ -1,28 +1,28 @@
 import { cn } from "@/lib/utils";
-import { MdCheckCircleOutline, MdOutlineErrorOutline } from "react-icons/md";
+import { HiOutlineCheckCircle, HiOutlineExclamationCircle } from "react-icons/hi";
 
 type AuthMessageProps = {
     error: boolean;
     message: string;
 };
 
-const AuthMessage = ({ error, message }: AuthMessageProps) => {
+export default function AuthMessage({ error, message }: AuthMessageProps) {
     return (
         <div
             className={cn(
-                "w-full max-w-[340px] shadow-[inset_0px_0px_0px_4px_rgba(252,244,244,1)] border border-destructive px-5 py-3 rounded-[8px] mb-4",
+                "w-full max-w-[320px] shadow-[inset_0px_0px_0px_4px_rgba(252,50,50,.1)] border border-destructive px-5 py-3 rounded-[8px] mb-6",
                 {
-                    "shadow-[inset_0px_0px_0px_4px_rgba(244,252,244,1)] border-green-700": !error,
+                    "shadow-[inset_0px_0px_0px_4px_rgba(50,252,50,.1)] border-green-700": !error,
                 }
             )}
         >
             <div
-                className={cn("flex items-start gap-3 text-destructive", {
+                className={cn("flex items-start gap-2 text-destructive", {
                     "text-green-700": !error,
                 })}
             >
                 <span className="text-2xl">
-                    {error ? <MdOutlineErrorOutline /> : <MdCheckCircleOutline />}
+                    {error ? <HiOutlineExclamationCircle /> : <HiOutlineCheckCircle />}
                 </span>
                 <div>
                     <h4 className="text-[17px] leading-6 block font-medium">
@@ -35,6 +35,4 @@ const AuthMessage = ({ error, message }: AuthMessageProps) => {
             </div>
         </div>
     );
-};
-
-export default AuthMessage;
+}

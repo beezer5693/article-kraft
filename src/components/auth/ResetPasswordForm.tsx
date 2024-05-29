@@ -5,7 +5,7 @@ import {
     checkConfirmPasswordMatchesPassword,
     getFieldErrorStyle,
     isPasswordGreaterThanEightChars,
-} from "@/lib/form-helpers";
+} from "@/lib/formHelpers";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
@@ -16,7 +16,7 @@ import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 
-const ResetPasswordForm = () => {
+export default function ResetPasswordForm() {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const [isPasswordOpen, setIsPasswordOpen] = useState(false);
@@ -136,6 +136,4 @@ const ResetPasswordForm = () => {
             </form>
         </Form>
     );
-};
-
-export default ResetPasswordForm;
+}

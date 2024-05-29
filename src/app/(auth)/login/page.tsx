@@ -4,10 +4,14 @@ import FormContainer from "@/components/auth/FormContainer";
 import FormHeader from "@/components/auth/FormHeader";
 import LoginForm from "@/components/auth/LoginForm";
 import ToggleAuthForm from "@/components/auth/ToggleAuthForm";
-import Logo from "@/components/shared/logo";
+import { Logo } from "@/components/shared/logo";
 import Divider from "@/components/ui/divider";
 
-const Login = ({ searchParams }: { searchParams: { error: string; message: string } }) => {
+export default function Login({
+    searchParams,
+}: {
+    searchParams: { error: string; message: string };
+}) {
     const { error, message } = searchParams;
 
     return (
@@ -15,13 +19,11 @@ const Login = ({ searchParams }: { searchParams: { error: string; message: strin
             {error && <AuthMessage error={error === "true"} message={message} />}
             <FormContainer>
                 <Logo />
-                <FormHeader variant={"SIGN_IN"} />
+                <FormHeader variant={"LOG_IN"} />
                 <LoginForm />
                 <Divider />
-                <ToggleAuthForm variant={"SIGN_IN"} />
+                <ToggleAuthForm variant={"LOG_IN"} />
             </FormContainer>
         </AuthPageContainer>
     );
-};
-
-export default Login;
+}

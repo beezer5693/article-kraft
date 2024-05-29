@@ -1,17 +1,12 @@
 import Link from "next/link";
-import React from "react";
-import { IoMdArrowDropleft } from "react-icons/io";
 
-const BackToLoginButton = () => {
+export default function BackToLoginButton() {
     return (
         <Link
-            className="mx-auto mt-4 inline-flex items-center hover:underline text-sm text-link hover:text-orange-600"
+            className="mx-auto mt-4 inline-flex items-center hover:underline text-sm font-medium hover:text-foreground/70"
             href={"/login"}
         >
-            <IoMdArrowDropleft className="h-3 w-3 mt-0.5" />
             <span>Back to Login</span>
         </Link>
     );
-};
-
-export default BackToLoginButton;
+}

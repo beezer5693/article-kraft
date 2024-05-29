@@ -1,41 +1,9 @@
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import localFont from "next/font/local";
-import { Toaster } from "react-hot-toast";
+import { GeistSans } from "geist/font/sans";
+import { ThemeProvider } from "@/context/ThemeProvider";
 import "../styles/globals.css";
-
-const ember = localFont({
-    variable: "--ember",
-    display: "swap",
-    src: [
-        {
-            path: "../../public/fonts/AmazonEmber_Lt.ttf",
-            weight: "300",
-            style: "light",
-        },
-        {
-            path: "../../public/fonts/AmazonEmber_Rg.ttf",
-            weight: "400",
-            style: "normal",
-        },
-        {
-            path: "../../public/fonts/Amazon-Ember-Medium.ttf",
-            weight: "500",
-            style: "medium",
-        },
-        {
-            path: "../../public/fonts/AmazonEmber_Bd.ttf",
-            weight: "700",
-            style: "bold",
-        },
-        {
-            path: "../../public/fonts/AmazonEmber_He.ttf",
-            weight: "800",
-            style: "heavy",
-        },
-    ],
-});
 
 const inter = Inter({
     subsets: ["latin"],
@@ -56,11 +24,17 @@ export default function RootLayout({
             <body
                 className={cn(
                     "bg-background antialiased min-h-screen text-foreground",
-                    ember.className
+                    GeistSans.className
                 )}
             >
-                {children}
-                <Toaster position="top-right" />
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="light"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );

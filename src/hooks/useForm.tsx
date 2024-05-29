@@ -1,22 +1,23 @@
-import { getFormErrorsFromServerAction } from "@/lib/form-helpers";
 import {
     forgotPasswordSchema,
     loginSchema,
     resetPasswordSchema,
     signUpSchema,
-} from "@/lib/form-validators";
+} from "@/lib/formValidators";
 import {
     TForgotPasswordSchema,
     TLoginSchema,
     TResetPasswordSchema,
     TSignUpSchema,
 } from "@/lib/types";
-import { login, signup } from "@/server-actions/auth/actions";
+import { displayFormErrorsFromServerAction } from "@/lib/formHelpers";
+import { loginAction } from "@/server-actions/auth/loginAction";
+import { signupAction } from "@/server-actions/auth/signupAction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 // Signup form
-export const useSignupForm = () => {
+export function useSignupForm() {
     const form = useForm<TSignUpSchema>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
@@ -27,19 +28,18 @@ export const useSignupForm = () => {
     });
 
     const onSubmit: SubmitHandler<TSignUpSchema> = async (values) => {
-        const result = await signup(values);
-
+        const result = await signupAction(values);
         if (result?.errors) {
             const { errors } = result;
-            getFormErrorsFromServerAction(errors, form);
+            displayFormErrorsFromServerAction(errors, form);
         }
     };
 
     return { form, onSubmit };
-};
+}
 
 // Login form
-export const useLoginForm = () => {
+export function useLoginForm() {
     const form = useForm<TLoginSchema>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -49,18 +49,17 @@ export const useLoginForm = () => {
     });
 
     const onSubmit: SubmitHandler<TLoginSchema> = async (values) => {
-        const result = await login(values);
-
+        const result = await loginAction(values);
         if (result?.errors) {
             const { errors } = result;
-            getFormErrorsFromServerAction(errors, form);
+            displayFormErrorsFromServerAction(errors, form);
         }
     };
 
     return { form, onSubmit };
-};
+}
 
-export const useForgotPasswordForm = () => {
+export function useForgotPasswordForm() {
     const form = useForm<TForgotPasswordSchema>({
         resolver: zodResolver(forgotPasswordSchema),
         defaultValues: {
@@ -73,9 +72,9 @@ export const useForgotPasswordForm = () => {
     };
 
     return { form, onSubmit };
-};
+}
 
-export const useResetPasswordForm = () => {
+export function useResetPasswordForm() {
     const form = useForm<TResetPasswordSchema>({
         resolver: zodResolver(resetPasswordSchema),
         defaultValues: {
@@ -89,4 +88,4 @@ export const useResetPasswordForm = () => {
     };
 
     return { form, onSubmit };
-};
+}

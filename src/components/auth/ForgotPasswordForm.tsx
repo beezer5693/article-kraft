@@ -2,13 +2,13 @@
 
 import { useForgotPasswordForm } from "@/hooks/useForm";
 import { cn } from "@/lib/utils";
-import { getFieldErrorStyle } from "@/lib/form-helpers";
+import { getFieldErrorStyle } from "@/lib/formHelpers";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 
-const ForgotPasswordForm = () => {
+export default function ForgotPasswordForm() {
     const { form, onSubmit } = useForgotPasswordForm();
     const { isSubmitting } = form.formState;
 
@@ -41,6 +41,4 @@ const ForgotPasswordForm = () => {
             </form>
         </Form>
     );
-};
-
-export default ForgotPasswordForm;
+}

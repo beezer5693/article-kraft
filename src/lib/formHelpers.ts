@@ -3,63 +3,61 @@ import { ChangeEvent } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { ZodFormattedError } from "zod";
 
-export const getFieldErrorStyle = (form: Form, field: Field): string => {
+export function getFieldErrorStyle(form: Form, field: Field): string {
     const fieldState = form.getFieldState(field.name) || {};
     const fieldError = fieldState.error || fieldState.invalid;
     return fieldError
-        ? "border-destructive shadow-[inset_0px_0px_0px_1px_rgba(204,12,57,1)] focus:border-destructive focus:shadow-[0px_0px_0px_3px_rgb(196,0,0,0.2),inset_0px_0px_0px_1px_rgba(204,12,57,0)]"
+        ? "border-destructive focus:border-destructive focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/30"
         : "";
-};
+}
 
-export const checkForEmailInPassword = (form: Form): boolean => {
+export function checkForEmailInPassword(form: Form): boolean {
     const email = form.watch("email").toLowerCase();
     const password = form.watch("password").toLowerCase();
     const textBeforeAtSign = email?.split("@")[0];
     return password?.includes(textBeforeAtSign);
-};
+}
 
-export const isPasswordGreaterThanEightChars = (form: Form): boolean => {
+export function isPasswordGreaterThanEightChars(form: Form): boolean {
     return form.watch("password")?.length >= 8;
-};
+}
 
-export const isFieldDirty = (form: Form, name: string): boolean => {
+export function isFieldDirty(form: Form, name: string): boolean {
     return form.getFieldState(name).isDirty;
-};
+}
 
-export const checkConfirmPasswordMatchesPassword = (form: Form): boolean => {
+export function checkConfirmPasswordMatchesPassword(form: Form): boolean {
     return (
         form.watch("password") === form.watch("confirmPassword") &&
         isFieldDirty(form, "confirmPassword")
     );
-};
+}
 
-export const getFormSubmissionButtonText = (
-    variant: FormVariant,
-    isSubmitting: boolean
-): { buttonText: string } => {
+export function getFormSubmissionButtonText(variant: FormVariant): { buttonText: string } {
     let buttonText = "";
 
     switch (variant) {
         case "SIGN_UP":
-            buttonText = isSubmitting ? "Signing up..." : "Sign up";
+            buttonText = "Sign up";
             break;
-        case "SIGN_IN":
-            buttonText = isSubmitting ? "Signing in..." : "Sign in";
+        case "LOG_IN":
+            buttonText = "Log in";
             break;
         case "FORGOT_PASSWORD":
-            buttonText = isSubmitting ? "Sending reset link..." : "Send reset link";
+            buttonText = "Continue";
             break;
         case "RESET_PASSWORD":
-            buttonText = isSubmitting ? "Resetting password..." : "Reset password";
+            buttonText = "Reset password";
             break;
     }
 
     return { buttonText };
-};
+}
 
-export const getFormHeader = (
-    variant: FormVariant
-): { formTitle: string; formDescription: string } => {
+export function getFormHeader(variant: FormVariant): {
+    formTitle: string;
+    formDescription: string;
+} {
     let formTitle = "";
     let formDescription = "";
 
@@ -68,13 +66,14 @@ export const getFormHeader = (
             formTitle = "Get started";
             formDescription = "Create a new account";
             break;
-        case "SIGN_IN":
+        case "LOG_IN":
             formTitle = "Welcome back";
-            formDescription = "Sign in to your account";
+            formDescription = "Log in to your account";
             break;
         case "FORGOT_PASSWORD":
             formTitle = "Forgot Password";
-            formDescription = "Enter your email and we'll send you a link to reset your password";
+            formDescription =
+                "Enter your email and we'll send you a one-time verification code to reset your password.";
             break;
         case "RESET_PASSWORD":
             formTitle = "Reset Password";
@@ -83,22 +82,22 @@ export const getFormHeader = (
     }
 
     return { formTitle, formDescription };
-};
+}
 
-const formatFullName = (value: string): string => {
+function formatFullName(value: string): string {
     return value
         .replace(/\s{2,}/g, " ") // Replace multiple spaces with a single space
         .replace(/[^a-zA-Z\s]+/g, "") // Remove any non-alphabetical characters except spaces
         .replace(/^ +/, ""); // Remove spaces at the beginning
-};
+}
 
-export const applyFullNameFormatting = (e: ChangeEvent<HTMLInputElement>, field: Field): string => {
+export function applyFullNameFormatting(e: ChangeEvent<HTMLInputElement>, field: Field): string {
     const { value } = e.target;
     field.onChange(formatFullName(value));
     return e.target.value.trim();
-};
+}
 
-export const getFormErrorsFromServerAction = (
+export function displayFormErrorsFromServerAction(
     errors: ZodFormattedError<
         {
             full_name: string;
@@ -108,7 +107,7 @@ export const getFormErrorsFromServerAction = (
         string
     >,
     form: UseFormReturn<any, any, undefined>
-) => {
+) {
     if (errors.full_name) {
         form.setError("full_name", {
             type: "server",
@@ -127,4 +126,4 @@ export const getFormErrorsFromServerAction = (
             message: `${errors.password._errors[0]}`,
         });
     }
-};
+}

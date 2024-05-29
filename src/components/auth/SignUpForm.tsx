@@ -8,17 +8,17 @@ import {
     getFieldErrorStyle,
     isFieldDirty,
     isPasswordGreaterThanEightChars,
-} from "@/lib/form-helpers";
+} from "@/lib/formHelpers";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { MdCheckCircleOutline } from "react-icons/md";
+import { HiOutlineCheckCircle } from "react-icons/hi";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 
-const SignUpForm = () => {
+export default function SignUpForm() {
     const [isVisible, setIsVisible] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -95,7 +95,7 @@ const SignUpForm = () => {
                             >
                                 <CollapsibleContent className="CollapsibleContent">
                                     <div className="flex items-center gap-1">
-                                        <MdCheckCircleOutline
+                                        <HiOutlineCheckCircle
                                             className={cn("text-foreground/30 h-3.5 w-3.5", {
                                                 "text-green-600":
                                                     isPasswordGreaterThanEightChars(form),
@@ -111,7 +111,7 @@ const SignUpForm = () => {
                                         </FormDescription>
                                     </div>
                                     <div className="flex items-center gap-1">
-                                        <MdCheckCircleOutline
+                                        <HiOutlineCheckCircle
                                             className={cn("text-foreground/30 h-3.5 w-3.5", {
                                                 "text-green-600":
                                                     isFieldDirty(form, "password") &&
@@ -141,6 +141,4 @@ const SignUpForm = () => {
             </form>
         </Form>
     );
-};
-
-export default SignUpForm;
+}
