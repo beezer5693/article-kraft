@@ -2,27 +2,23 @@ import AuthMessage from "@/components/auth/AuthMessage";
 import AuthPageContainer from "@/components/auth/AuthPageContainer";
 import FormContainer from "@/components/auth/FormContainer";
 import FormHeader from "@/components/auth/FormHeader";
-import SignUpForm from "@/components/auth/SignUpForm";
-import ToggleAuthForm from "@/components/auth/ToggleAuthForm";
+import OTPForm from "@/components/auth/OTPForm";
 import { Logo } from "@/components/shared/Logo";
-import Divider from "@/components/ui/Divider";
 
-export default function SignUp({
+export default function OTP({
     searchParams,
 }: {
-    searchParams: { error: string; message: string };
+    searchParams: { email: string; error: string; message: string };
 }) {
-    const { error, message } = searchParams;
+    const { email, error, message } = searchParams;
 
     return (
         <AuthPageContainer>
             {error && <AuthMessage error={error === "true"} message={message} />}
             <FormContainer>
                 <Logo />
-                <FormHeader variant={"SIGN_UP"} />
-                <SignUpForm />
-                <Divider />
-                <ToggleAuthForm variant={"SIGN_UP"} />
+                <FormHeader variant={"OTP"} />
+                <OTPForm email={email} />
             </FormContainer>
         </AuthPageContainer>
     );

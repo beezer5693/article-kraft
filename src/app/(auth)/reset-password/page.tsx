@@ -3,14 +3,14 @@ import AuthPageContainer from "@/components/auth/AuthPageContainer";
 import FormContainer from "@/components/auth/FormContainer";
 import FormHeader from "@/components/auth/FormHeader";
 import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
-import { Logo } from "@/components/shared/logo";
+import { Logo } from "@/components/shared/Logo";
 
 export default function ResetPassword({
     searchParams,
 }: {
-    searchParams: { error: string; message: string };
+    searchParams: { error: string; message: string; email: string };
 }) {
-    const { error, message } = searchParams;
+    const { error, message, email } = searchParams;
 
     return (
         <AuthPageContainer>
@@ -18,7 +18,7 @@ export default function ResetPassword({
             <FormContainer>
                 <Logo />
                 <FormHeader variant={"RESET_PASSWORD"} />
-                <ResetPasswordForm />
+                <ResetPasswordForm email={email} />
             </FormContainer>
         </AuthPageContainer>
     );

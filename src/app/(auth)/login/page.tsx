@@ -4,8 +4,8 @@ import FormContainer from "@/components/auth/FormContainer";
 import FormHeader from "@/components/auth/FormHeader";
 import LoginForm from "@/components/auth/LoginForm";
 import ToggleAuthForm from "@/components/auth/ToggleAuthForm";
-import { Logo } from "@/components/shared/logo";
-import Divider from "@/components/ui/divider";
+import { Logo } from "@/components/shared/Logo";
+import Divider from "@/components/ui/Divider";
 
 export default function Login({
     searchParams,

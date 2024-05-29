@@ -7,7 +7,7 @@ export function getFieldErrorStyle(form: Form, field: Field): string {
     const fieldState = form.getFieldState(field.name) || {};
     const fieldError = fieldState.error || fieldState.invalid;
     return fieldError
-        ? "border-destructive focus:border-destructive focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/30"
+        ? "border-destructive focus:border-destructive focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40"
         : "";
 }
 
@@ -49,6 +49,9 @@ export function getFormSubmissionButtonText(variant: FormVariant): { buttonText:
         case "RESET_PASSWORD":
             buttonText = "Reset password";
             break;
+        case "OTP":
+            buttonText = "Verify";
+            break;
     }
 
     return { buttonText };
@@ -71,13 +74,17 @@ export function getFormHeader(variant: FormVariant): {
             formDescription = "Log in to your account";
             break;
         case "FORGOT_PASSWORD":
-            formTitle = "Forgot Password";
+            formTitle = "Forgot password";
             formDescription =
-                "Enter your email and we'll send you a one-time verification code to reset your password.";
+                "Enter your email and we'll send you a one-time verification code to reset your password";
             break;
         case "RESET_PASSWORD":
-            formTitle = "Reset Password";
+            formTitle = "Reset password";
             formDescription = "Create a new password for your account";
+            break;
+        case "OTP":
+            formTitle = "Verify your email";
+            formDescription = "Enter the one-time verification code sent to your email";
             break;
     }
 

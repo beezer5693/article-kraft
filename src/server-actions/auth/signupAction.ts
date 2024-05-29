@@ -1,7 +1,8 @@
 "use server";
 
+import { GENERIC_ERROR_MESSAGE } from "@/lib/constants";
 import { signUpSchema } from "@/lib/formValidators";
-import { seperateFullNameIntoFirstAndLastName } from "@/lib/formatName";
+import { seperateFullNameIntoFirstAndLastName, trimAndLowercaseText } from "@/lib/textFormatters";
 import { setAuthCookies } from "@/lib/setAuthCookies";
 import { TSignUpSchema } from "@/lib/types";
 import { revalidatePath } from "next/cache";
@@ -13,12 +14,16 @@ export async function signupAction(values: TSignUpSchema) {
         return { errors: error.format() };
     }
 
-    const [first_name, last_name] = seperateFullNameIntoFirstAndLastName(values.full_name);
+    const { full_name, email, password } = values;
+
+    const [first_name, last_name] = seperateFullNameIntoFirstAndLastName(full_name);
+    const formattedEmail = trimAndLowercaseText(email);
+
     const formValues = {
         first_name,
         last_name,
-        email: values.email.trim().toLowerCase(),
-        password: values.password.trim(),
+        email: formattedEmail,
+        password: password.trim(),
     };
 
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/auth/register`, {
@@ -32,10 +37,10 @@ export async function signupAction(values: TSignUpSchema) {
     const jsonData = await response.json();
 
     if (response.status === 409) {
-        redirect(`/signup?error=true&message=${jsonData.message}`);
+        return redirect(`/signup?error=true&message=${jsonData.message}`);
     }
     if (!response.ok) {
-        redirect(`/signup?error=true&message=Uh oh! Something went wrong. Please try again.`);
+        return redirect(`/signup?error=true&message=${GENERIC_ERROR_MESSAGE}`);
     }
 
     const { data } = jsonData;

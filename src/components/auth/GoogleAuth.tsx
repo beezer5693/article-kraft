@@ -1,7 +1,7 @@
 "use client";
 
-import { Google } from "../icons/google";
-import { Button } from "../ui/button";
+import { Google } from "../icons/Google";
+import { Button } from "../ui/Button";
 
 export default function GoogleAuth() {
     const handleSignInGoogle = async () => {

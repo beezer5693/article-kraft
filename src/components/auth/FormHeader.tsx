@@ -10,8 +10,8 @@ export default function FormHeader({ variant }: FormHeaderProps) {
 
     return (
         <div className="mb-10 w-full text-center">
-            <h1 className="text-[1.85rem] leading-none tracking-[-0.02em]">{formTitle}</h1>
-            <p className="text-pretty mt-2 px-3 mx-auto text-sm">{formDescription}</p>
+            <h1 className="text-[1.85rem] tracking-[-0.02em]">{formTitle}</h1>
+            <p className="text-balance px-3 mx-auto text-sm">{formDescription}</p>
         </div>
     );
 }

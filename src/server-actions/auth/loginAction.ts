@@ -1,7 +1,9 @@
 "use server";
 
+import { GENERIC_ERROR_MESSAGE } from "@/lib/constants";
 import { loginSchema } from "@/lib/formValidators";
 import { setAuthCookies } from "@/lib/setAuthCookies";
+import { trimAndLowercaseText } from "@/lib/textFormatters";
 import { TLoginSchema } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -12,9 +14,13 @@ export async function loginAction(values: TLoginSchema) {
         return { errors: error.format() };
     }
 
+    const { email, password } = values;
+
+    const formattedEmail = trimAndLowercaseText(email);
+
     const formValues = {
-        email: values.email.trim().toLowerCase(),
-        password: values.password.trim(),
+        email: formattedEmail,
+        password: password.trim(),
     };
 
     const response = await fetch(`${process.env.BACKEND_URL}/api/v1/auth/login`, {
@@ -28,8 +34,12 @@ export async function loginAction(values: TLoginSchema) {
 
     const jsonData = await response.json();
 
+    if (response.status === 401 || response.status === 404) {
+        return redirect(`/login?error=true&message=${jsonData.message}`);
+    }
+
     if (!response.ok) {
-        redirect(`/login?error=true&message=${jsonData.message}`);
+        return redirect(`/login?error=true&message=${GENERIC_ERROR_MESSAGE}`);
     }
 
     const { data } = jsonData;

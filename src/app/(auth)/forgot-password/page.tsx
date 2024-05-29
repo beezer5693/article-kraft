@@ -4,7 +4,7 @@ import BackToLoginButton from "@/components/auth/BackToLoginButton";
 import ForgotPasswordForm from "@/components/auth/ForgotPasswordForm";
 import FormContainer from "@/components/auth/FormContainer";
 import FormHeader from "@/components/auth/FormHeader";
-import { Logo } from "@/components/shared/logo";
+import { Logo } from "@/components/shared/Logo";
 
 export default function ForgotPassword({
     searchParams,

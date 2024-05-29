@@ -3,8 +3,8 @@
 import { useForgotPasswordForm } from "@/hooks/useForm";
 import { cn } from "@/lib/utils";
 import { getFieldErrorStyle } from "@/lib/formHelpers";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
-import { Input } from "../ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/Form";
+import { Input } from "../ui/Input";
 import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 

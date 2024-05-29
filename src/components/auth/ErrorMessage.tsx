@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { UseFormReturn } from "react-hook-form";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { FormMessage } from "../ui/form";
+import { FaExclamation } from "react-icons/fa6";
+import { FormMessage } from "../ui/Form";
 
 type ErrorMessageProps = {
     form: UseFormReturn<any, any, undefined>;
@@ -15,7 +15,7 @@ export default function ErrorMessage({ form, field }: ErrorMessageProps) {
                 flex: form.getFieldState<any>(field)?.error,
             })}
         >
-            <HiOutlineExclamationCircle className="text-destructive h-3.5 w-3.5" />
+            <FaExclamation className="text-destructive h-3 w-3" />
             <FormMessage />
         </div>
     );

@@ -9,20 +9,24 @@ import {
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
-import { Collapsible, CollapsibleContent } from "../ui/collapsible";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
-import { Input } from "../ui/input";
+import { Collapsible, CollapsibleContent } from "../ui/Collapsible";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/Form";
+import { Input } from "../ui/Input";
 import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 
-export default function ResetPasswordForm() {
+type ResetPasswordFormProps = {
+    email: string;
+};
+
+export default function ResetPasswordForm({ email }: ResetPasswordFormProps) {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const [isPasswordOpen, setIsPasswordOpen] = useState(false);
     const [isConfirmPasswordOpen, setIsConfirmPasswordOpen] = useState(false);
 
-    const { form, onSubmit } = useResetPasswordForm();
+    const { form, onSubmit } = useResetPasswordForm(email);
     const { isSubmitting } = form.formState;
 
     return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent } from "@/components/ui/Collapsible";
 import { useSignupForm } from "@/hooks/useForm";
 import {
     applyFullNameFormatting,
@@ -11,9 +11,9 @@ import {
 } from "@/lib/formHelpers";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { HiOutlineCheckCircle } from "react-icons/hi";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
-import { Input } from "../ui/input";
+import { FaCheck } from "react-icons/fa6";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/Form";
+import { Input } from "../ui/Input";
 import ErrorMessage from "./ErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
@@ -95,8 +95,8 @@ export default function SignUpForm() {
                             >
                                 <CollapsibleContent className="CollapsibleContent">
                                     <div className="flex items-center gap-1">
-                                        <HiOutlineCheckCircle
-                                            className={cn("text-foreground/30 h-3.5 w-3.5", {
+                                        <FaCheck
+                                            className={cn("text-foreground/30 h-3 w-3", {
                                                 "text-green-600":
                                                     isPasswordGreaterThanEightChars(form),
                                             })}
@@ -111,8 +111,8 @@ export default function SignUpForm() {
                                         </FormDescription>
                                     </div>
                                     <div className="flex items-center gap-1">
-                                        <HiOutlineCheckCircle
-                                            className={cn("text-foreground/30 h-3.5 w-3.5", {
+                                        <FaCheck
+                                            className={cn("text-foreground/30 h-3 w-3", {
                                                 "text-green-600":
                                                     isFieldDirty(form, "password") &&
                                                     !checkForEmailInPassword(form),
