@@ -35,12 +35,6 @@ export const forgotPasswordSchema = z.object({
     email: z.string().min(1, "Email is a required field").email("Enter a valid email address"),
 });
 
-export const otpSchema = z.object({
-    pin: z.string().min(6, {
-        message: "Code must be 6 characters.",
-    }),
-});
-
 export const resetPasswordSchema = z
     .object({
         password: z

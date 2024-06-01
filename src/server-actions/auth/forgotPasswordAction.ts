@@ -1,5 +1,6 @@
 "use server";
 
+import { NO_ACCOUNT_FOUND_MESSAGE, PASSWORD_RESET_LINK_SENT_MESSAGE } from "@/lib/constants";
 import { forgotPasswordSchema } from "@/lib/formValidators";
 import { trimAndLowercaseText } from "@/lib/textFormatters";
 import { TForgotPasswordSchema } from "@/lib/types";
@@ -30,14 +31,12 @@ export async function forgotPasswordAction(values: TForgotPasswordSchema) {
     const jsonData = await response.json();
 
     if (response.status === 404) {
-        return redirect(
-            `/forgot-password?error=true&message=No account found with the provided email. Please make sure the email is correct and try again.`
-        );
+        return redirect(`/forgot-password?error=true&message=${NO_ACCOUNT_FOUND_MESSAGE}`);
     }
 
     if (!response.ok) {
         return redirect(`/forgot-password?error=true&message=${jsonData.message}`);
     }
 
-    redirect(`/forgot-password/otp?email=${formattedEmail}`);
+    redirect(`/forgot-password?error=false&message=${PASSWORD_RESET_LINK_SENT_MESSAGE}`);
 }

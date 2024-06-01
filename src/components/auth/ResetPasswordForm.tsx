@@ -17,16 +17,16 @@ import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 
 type ResetPasswordFormProps = {
-    email: string;
+    code: string;
 };
 
-export default function ResetPasswordForm({ email }: ResetPasswordFormProps) {
+export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const [isPasswordOpen, setIsPasswordOpen] = useState(false);
     const [isConfirmPasswordOpen, setIsConfirmPasswordOpen] = useState(false);
 
-    const { form, onSubmit } = useResetPasswordForm(email);
+    const { form, onSubmit } = useResetPasswordForm(code);
     const { isSubmitting } = form.formState;
 
     return (
@@ -70,7 +70,7 @@ export default function ResetPasswordForm({ email }: ResetPasswordFormProps) {
                                         />
                                         <FormDescription
                                             className={cn("text-foreground/40 font-medium", {
-                                                "text-foreground/65":
+                                                "text-foreground/80":
                                                     isPasswordGreaterThanEightChars(form),
                                             })}
                                         >
@@ -120,7 +120,7 @@ export default function ResetPasswordForm({ email }: ResetPasswordFormProps) {
                                         />
                                         <FormDescription
                                             className={cn("text-foreground/40 font-medium", {
-                                                "text-foreground/65":
+                                                "text-foreground/80":
                                                     checkConfirmPasswordMatchesPassword(form),
                                             })}
                                         >

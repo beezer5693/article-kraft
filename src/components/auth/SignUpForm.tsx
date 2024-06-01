@@ -103,7 +103,7 @@ export default function SignUpForm() {
                                         />
                                         <FormDescription
                                             className={cn("text-foreground/40 font-medium", {
-                                                "text-foreground/65":
+                                                "text-foreground/80":
                                                     isPasswordGreaterThanEightChars(form),
                                             })}
                                         >
@@ -120,7 +120,7 @@ export default function SignUpForm() {
                                         />
                                         <FormDescription
                                             className={cn("text-foreground/40 font-medium", {
-                                                "text-foreground/65":
+                                                "text-foreground/80":
                                                     isFieldDirty(form, "password") &&
                                                     !checkForEmailInPassword(form),
                                             })}

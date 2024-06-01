@@ -1,25 +1,22 @@
+import { displayFormErrorsFromServerAction } from "@/lib/formHelpers";
 import {
     forgotPasswordSchema,
     loginSchema,
-    otpSchema,
     resetPasswordSchema,
     signUpSchema,
 } from "@/lib/formValidators";
 import {
     TForgotPasswordSchema,
     TLoginSchema,
-    TOTPSchema,
     TResetPasswordSchema,
     TSignUpSchema,
 } from "@/lib/types";
-import { displayFormErrorsFromServerAction } from "@/lib/formHelpers";
+import { forgotPasswordAction } from "@/server-actions/auth/forgotPasswordAction";
 import { loginAction } from "@/server-actions/auth/loginAction";
+import { resetPasswordAction } from "@/server-actions/auth/resetPasswordAction";
 import { signupAction } from "@/server-actions/auth/signupAction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { forgotPasswordAction } from "@/server-actions/auth/forgotPasswordAction";
-import { verifyOTPAction } from "@/server-actions/auth/verifyOTPAction";
-import { resetPasswordAction } from "@/server-actions/auth/resetPasswordAction";
 
 // Signup form
 export function useSignupForm() {
@@ -83,26 +80,7 @@ export function useForgotPasswordForm() {
     return { form, onSubmit };
 }
 
-export function useOTPForm(email: string) {
-    const form = useForm<TOTPSchema>({
-        resolver: zodResolver(otpSchema),
-        defaultValues: {
-            pin: "",
-        },
-    });
-
-    const onSubmit: SubmitHandler<TOTPSchema> = async (values) => {
-        const result = await verifyOTPAction(email, values);
-        if (result?.errors) {
-            const { errors } = result;
-            displayFormErrorsFromServerAction(errors, form);
-        }
-    };
-
-    return { form, onSubmit };
-}
-
-export function useResetPasswordForm(email: string) {
+export function useResetPasswordForm(code: string) {
     const form = useForm<TResetPasswordSchema>({
         resolver: zodResolver(resetPasswordSchema),
         defaultValues: {
@@ -112,7 +90,7 @@ export function useResetPasswordForm(email: string) {
     });
 
     const onSubmit: SubmitHandler<TResetPasswordSchema> = async (values: TResetPasswordSchema) => {
-        const result = await resetPasswordAction(email, values);
+        const result = await resetPasswordAction(code, values);
         if (result?.errors) {
             const { errors } = result;
             displayFormErrorsFromServerAction(errors, form);

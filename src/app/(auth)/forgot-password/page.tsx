@@ -5,6 +5,7 @@ import ForgotPasswordForm from "@/components/auth/ForgotPasswordForm";
 import FormContainer from "@/components/auth/FormContainer";
 import FormHeader from "@/components/auth/FormHeader";
 import { Logo } from "@/components/shared/Logo";
+import Divider from "@/components/ui/Divider";
 
 export default function ForgotPassword({
     searchParams,
@@ -20,6 +21,7 @@ export default function ForgotPassword({
                 <Logo />
                 <FormHeader variant={"FORGOT_PASSWORD"} />
                 <ForgotPasswordForm />
+                <Divider />
                 <BackToLoginButton />
             </FormContainer>
         </AuthPageContainer>

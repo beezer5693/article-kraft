@@ -8,9 +8,9 @@ import { Logo } from "@/components/shared/Logo";
 export default function ResetPassword({
     searchParams,
 }: {
-    searchParams: { error: string; message: string; email: string };
+    searchParams: { error: string; message: string; code: string };
 }) {
-    const { error, message, email } = searchParams;
+    const { error, message, code } = searchParams;
 
     return (
         <AuthPageContainer>
@@ -18,7 +18,7 @@ export default function ResetPassword({
             <FormContainer>
                 <Logo />
                 <FormHeader variant={"RESET_PASSWORD"} />
-                <ResetPasswordForm email={email} />
+                <ResetPasswordForm code={code} />
             </FormContainer>
         </AuthPageContainer>
     );
