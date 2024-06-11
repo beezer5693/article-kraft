@@ -6,24 +6,25 @@ import LoginForm from "@/components/auth/LoginForm";
 import ToggleAuthForm from "@/components/auth/ToggleAuthForm";
 import { Logo } from "@/components/shared/Logo";
 import Divider from "@/components/ui/Divider";
+import { FormVariant } from "@/lib/types";
 
 export default function Login({
-    searchParams,
+  searchParams,
 }: {
-    searchParams: { error: string; message: string };
+  searchParams: { error: string; message: string };
 }) {
-    const { error, message } = searchParams;
+  const { error, message } = searchParams;
 
-    return (
-        <AuthPageContainer>
-            {error && <AuthMessage error={error === "true"} message={message} />}
-            <FormContainer>
-                <Logo />
-                <FormHeader variant={"LOG_IN"} />
-                <LoginForm />
-                <Divider />
-                <ToggleAuthForm variant={"LOG_IN"} />
-            </FormContainer>
-        </AuthPageContainer>
-    );
+  return (
+    <AuthPageContainer>
+      {error && <AuthMessage error={error === "true"} message={message} />}
+      <FormContainer>
+        <Logo />
+        <FormHeader variant={FormVariant.LOG_IN} />
+        <LoginForm />
+        <Divider />
+        <ToggleAuthForm variant={FormVariant.LOG_IN} />
+      </FormContainer>
+    </AuthPageContainer>
+  );
 }

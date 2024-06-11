@@ -9,43 +9,43 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function loginAction(values: TLoginSchema) {
-    const { error } = loginSchema.safeParse(values);
-    if (error) {
-        return { errors: error.format() };
-    }
+  const { error } = loginSchema.safeParse(values);
+  if (error) {
+    return { errors: error.format() };
+  }
 
-    const { email, password } = values;
+  const { email, password } = values;
 
-    const formattedEmail = trimAndLowercaseText(email);
+  const formattedEmail = trimAndLowercaseText(email);
 
-    const formValues = {
-        email: formattedEmail,
-        password: password.trim(),
-    };
+  const formValues = {
+    email: formattedEmail,
+    password: password.trim(),
+  };
 
-    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/auth/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
-        credentials: "include",
-    });
+  const response = await fetch(`${process.env.BACKEND_URL}/api/v1/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formValues),
+    credentials: "include",
+  });
 
-    const jsonData = await response.json();
+  const jsonData = await response.json();
 
-    if (response.status === 401 || response.status === 404) {
-        return redirect(`/login?error=true&message=${jsonData.message}`);
-    }
+  if (response.status === 401 || response.status === 404) {
+    return redirect(`/login?error=true&message=${jsonData.message}`);
+  }
 
-    if (!response.ok) {
-        return redirect(`/login?error=true&message=${GENERIC_ERROR_MESSAGE}`);
-    }
+  if (!response.ok) {
+    return redirect(`/login?error=true&message=${GENERIC_ERROR_MESSAGE}`);
+  }
 
-    const { data } = jsonData;
+  const { data } = jsonData;
 
-    setAuthCookies(data);
+  setAuthCookies(data);
 
-    revalidatePath(`/dashboard/${data.user.user_id}`, "layout");
-    redirect(`/dashboard/${data.user.user_id}`);
+  revalidatePath(`/dashboard/${data.user.user_id}`, "layout");
+  redirect(`/dashboard/${data.user.user_id}`);
 }

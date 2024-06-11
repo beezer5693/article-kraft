@@ -1,11 +1,11 @@
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
 export default function AuthPageContainer({ children }: PropsWithChildren) {
-    return (
-        <div className="min-h-screen flex flex-col items-center justify-center">
-            <main className="flex-1 container relative w-full flex flex-col items-center justify-center">
-                {children}
-            </main>
-        </div>
-    );
+  return (
+    <div className="relative flex min-h-screen flex-col items-center justify-center">
+      <main className="container relative flex w-full flex-1 flex-col items-center justify-center">
+        {children}
+      </main>
+    </div>
+  );
 }

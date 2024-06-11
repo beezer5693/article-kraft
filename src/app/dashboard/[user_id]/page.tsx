@@ -1,3 +1,5 @@
 export default async function Dashboard() {
-    return <div className="min-h-screen flex flex-col items-center justify-center"></div>;
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center"></div>
+  );
 }

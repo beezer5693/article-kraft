@@ -1,13 +1,28 @@
-import { ControllerRenderProps, FieldValues, UseFormReturn } from "react-hook-form";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  UseFormReturn,
+} from "react-hook-form";
 import { z } from "zod";
 import {
-    forgotPasswordSchema,
-    loginSchema,
-    resetPasswordSchema,
-    signUpSchema,
+  forgotPasswordSchema,
+  loginSchema,
+  resetPasswordSchema,
+  signUpSchema,
 } from "./formValidators";
 
-export type FormVariant = "SIGN_UP" | "LOG_IN" | "FORGOT_PASSWORD" | "RESET_PASSWORD" | "OTP";
+export enum FormVariant {
+  SIGN_UP = "SIGN_UP",
+  LOG_IN = "LOG_IN",
+  FORGOT_PASSWORD = "FORGOT_PASSWORD",
+  RESET_PASSWORD = "RESET_PASSWORD",
+}
+
+export enum Theme {
+  LIGHT = "light",
+  DARK = "dark",
+  SYSTEM = "system",
+}
 
 export type TLoginSchema = z.infer<typeof loginSchema>;
 
