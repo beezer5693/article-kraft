@@ -19,7 +19,7 @@ import {
   FormLabel,
 } from "../ui/Form";
 import { Input } from "../ui/Input";
-import ErrorMessage from "./ErrorMessage";
+import FormFieldErrorMessage from "./FormFieldErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 import { FormVariant } from "@/lib/types";
@@ -63,7 +63,7 @@ export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
                   />
                 </div>
               </FormControl>
-              <ErrorMessage form={form} field={"password"} />
+              <FormFieldErrorMessage form={form} field={"password"} />
               <Collapsible
                 open={isPasswordOpen}
                 onOpenChange={setIsPasswordOpen}
@@ -112,7 +112,7 @@ export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
                   />
                 </div>
               </FormControl>
-              <ErrorMessage form={form} field={"confirmPassword"} />
+              <FormFieldErrorMessage form={form} field={"confirmPassword"} />
               <Collapsible
                 open={isConfirmPasswordOpen}
                 onOpenChange={setIsConfirmPasswordOpen}

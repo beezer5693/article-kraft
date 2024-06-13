@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/Form";
 import { Input } from "../ui/Input";
-import ErrorMessage from "./ErrorMessage";
+import FormFieldErrorMessage from "./FormFieldErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 import { FormVariant } from "@/lib/types";
@@ -36,7 +36,7 @@ export default function LoginForm() {
                   {...field}
                 />
               </FormControl>
-              <ErrorMessage form={form} field={"email"} />
+              <FormFieldErrorMessage form={form} field={"email"} />
             </FormItem>
           )}
         />
@@ -69,7 +69,7 @@ export default function LoginForm() {
                   />
                 </div>
               </FormControl>
-              <ErrorMessage form={form} field={"password"} />
+              <FormFieldErrorMessage form={form} field={"password"} />
             </FormItem>
           )}
         />

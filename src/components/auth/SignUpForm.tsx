@@ -21,7 +21,7 @@ import {
   FormLabel,
 } from "../ui/Form";
 import { Input } from "../ui/Input";
-import ErrorMessage from "./ErrorMessage";
+import FormFieldErrorMessage from "./FormFieldErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 import { FormVariant } from "@/lib/types";
@@ -51,7 +51,7 @@ export default function SignUpForm() {
                   onChange={(e) => applyFullNameFormatting(e, field)}
                 />
               </FormControl>
-              <ErrorMessage form={form} field={"full_name"} />
+              <FormFieldErrorMessage form={form} field={"full_name"} />
             </FormItem>
           )}
         />
@@ -69,7 +69,7 @@ export default function SignUpForm() {
                   {...field}
                 />
               </FormControl>
-              <ErrorMessage form={form} field={"email"} />
+              <FormFieldErrorMessage form={form} field={"email"} />
             </FormItem>
           )}
         />
@@ -95,7 +95,7 @@ export default function SignUpForm() {
                   />
                 </div>
               </FormControl>
-              <ErrorMessage form={form} field={"password"} />
+              <FormFieldErrorMessage form={form} field={"password"} />
               <Collapsible
                 open={isOpen}
                 onOpenChange={setIsOpen}

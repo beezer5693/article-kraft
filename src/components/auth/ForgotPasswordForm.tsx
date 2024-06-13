@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { getFieldErrorStyle } from "@/lib/formHelpers";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/Form";
 import { Input } from "../ui/Input";
-import ErrorMessage from "./ErrorMessage";
+import FormFieldErrorMessage from "./FormFieldErrorMessage";
 import FormSubmissionButton from "./FormSubmissionButton";
 import { FormVariant } from "@/lib/types";
 
@@ -30,7 +30,7 @@ export default function ForgotPasswordForm() {
                   {...field}
                 />
               </FormControl>
-              <ErrorMessage form={form} field={"email"} />
+              <FormFieldErrorMessage form={form} field={"email"} />
             </FormItem>
           )}
         />
