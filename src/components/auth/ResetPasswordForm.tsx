@@ -1,6 +1,6 @@
 "use client";
 
-import { useResetPasswordForm } from "@/hooks/useForm";
+import { useResetPasswordForm } from "@/hooks/useResetPasswordForm";
 import {
   checkConfirmPasswordMatchesPassword,
   getFieldErrorStyle,

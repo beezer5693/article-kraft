@@ -7,7 +7,7 @@ export default async function Home() {
       <h1 className="text-3xl font-medium">Article Kraft</h1>
       <p>
         Enhance your article&apos;s readability and SEO by using our AI-powered
-        tool.
+        article enhancer.
       </p>
       <div className="mt-5 flex items-center gap-3">
         <Link href="/signup">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useLoginForm } from "@/hooks/useForm";
+import { useLoginForm } from "@/hooks/useLoginForm";
 import { cn } from "@/lib/utils";
 import { getFieldErrorStyle } from "@/lib/formHelpers";
 import Link from "next/link";

@@ -38,10 +38,10 @@ export async function resetPasswordAction(
 
   if (!response.ok) {
     return redirect(
-      `/reset-password?error=true&message=${jsonData.message}&code=${code}`,
+      `/reset-password?success=false&message=${jsonData.message}&code=${code}`,
     );
   }
 
   revalidatePath("/login", "layout");
-  redirect(`/login?error=false&message=${SUCCESSFUL_PASSWORD_RESET_MESSAGE}`);
+  redirect(`/login?success=true&message=${SUCCESSFUL_PASSWORD_RESET_MESSAGE}`);
 }

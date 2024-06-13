@@ -7,7 +7,7 @@ type ToggleAuthFormProps = {
 
 export default function ToggleAuthForm({ variant }: ToggleAuthFormProps) {
   return (
-    <div className="relative">
+    <div className="relative mt-10">
       {variant === FormVariant.SIGN_UP ? (
         <p className="text-center text-sm text-foreground">
           Already have an account?{" "}

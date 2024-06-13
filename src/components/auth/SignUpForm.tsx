@@ -1,7 +1,7 @@
 "use client";
 
 import { Collapsible, CollapsibleContent } from "@/components/ui/Collapsible";
-import { useSignupForm } from "@/hooks/useForm";
+import { useSignupForm } from "@/hooks/useSignupForm";
 import {
   applyFullNameFormatting,
   checkForEmailInPassword,

@@ -2,7 +2,7 @@
 
 import { GENERIC_ERROR_MESSAGE } from "@/lib/constants";
 import { loginSchema } from "@/lib/formValidators";
-import { setAuthCookies } from "@/lib/setAuthCookies";
+import { setSessionToken } from "@/lib/setSessionToken";
 import { trimAndLowercaseText } from "@/lib/textFormatters";
 import { TLoginSchema } from "@/lib/types";
 import { revalidatePath } from "next/cache";
@@ -35,16 +35,16 @@ export async function loginAction(values: TLoginSchema) {
   const jsonData = await response.json();
 
   if (response.status === 401 || response.status === 404) {
-    return redirect(`/login?error=true&message=${jsonData.message}`);
+    return redirect(`/login?success=false&message=${jsonData.message}`);
   }
 
   if (!response.ok) {
-    return redirect(`/login?error=true&message=${GENERIC_ERROR_MESSAGE}`);
+    return redirect(`/login?success=false&message=${GENERIC_ERROR_MESSAGE}`);
   }
 
   const { data } = jsonData;
 
-  setAuthCookies(data);
+  setSessionToken(data.access_token);
 
   revalidatePath(`/dashboard/${data.user.user_id}`, "layout");
   redirect(`/dashboard/${data.user.user_id}`);

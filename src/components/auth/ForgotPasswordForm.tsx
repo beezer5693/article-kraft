@@ -1,6 +1,6 @@
 "use client";
 
-import { useForgotPasswordForm } from "@/hooks/useForm";
+import { useForgotPasswordForm } from "@/hooks/useForgotPasswordForm";
 import { cn } from "@/lib/utils";
 import { getFieldErrorStyle } from "@/lib/formHelpers";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/Form";

@@ -2,11 +2,11 @@
 
 import { GENERIC_ERROR_MESSAGE } from "@/lib/constants";
 import { signUpSchema } from "@/lib/formValidators";
+import { setSessionToken } from "@/lib/setSessionToken";
 import {
   seperateFullNameIntoFirstAndLastName,
   trimAndLowercaseText,
 } from "@/lib/textFormatters";
-import { setAuthCookies } from "@/lib/setAuthCookies";
 import { TSignUpSchema } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -44,15 +44,15 @@ export async function signupAction(values: TSignUpSchema) {
   const jsonData = await response.json();
 
   if (response.status === 409) {
-    return redirect(`/signup?error=true&message=${jsonData.message}`);
+    return redirect(`/signup?success=false&message=${jsonData.message}`);
   }
   if (!response.ok) {
-    return redirect(`/signup?error=true&message=${GENERIC_ERROR_MESSAGE}`);
+    return redirect(`/signup?success=false&message=${GENERIC_ERROR_MESSAGE}`);
   }
 
   const { data } = jsonData;
 
-  setAuthCookies(data);
+  setSessionToken(data.access_token);
 
   revalidatePath(`/dashboard/${data.user.user_id}`, "layout");
   redirect(`/dashboard/${data.user.user_id}`);

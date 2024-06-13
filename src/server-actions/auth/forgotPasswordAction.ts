@@ -38,15 +38,17 @@ export async function forgotPasswordAction(values: TForgotPasswordSchema) {
 
   if (response.status === 404) {
     return redirect(
-      `/forgot-password?error=true&message=${NO_ACCOUNT_FOUND_MESSAGE}`,
+      `/forgot-password?success=false&message=${NO_ACCOUNT_FOUND_MESSAGE}`,
     );
   }
 
   if (!response.ok) {
-    return redirect(`/forgot-password?error=true&message=${jsonData.message}`);
+    return redirect(
+      `/forgot-password?success=false&message=${jsonData.message}`,
+    );
   }
 
   redirect(
-    `/forgot-password?error=false&message=${PASSWORD_RESET_LINK_SENT_MESSAGE}`,
+    `/forgot-password?success=true&message=${PASSWORD_RESET_LINK_SENT_MESSAGE}`,
   );
 }

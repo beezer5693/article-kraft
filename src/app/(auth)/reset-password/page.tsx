@@ -1,5 +1,5 @@
 import AuthMessage from "@/components/auth/AuthMessage";
-import AuthPageContainer from "@/components/auth/AuthPageContainer";
+import AuthPageLayout from "@/components/auth/AuthPageLayout";
 import FormContainer from "@/components/auth/FormContainer";
 import FormHeader from "@/components/auth/FormHeader";
 import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
@@ -9,18 +9,20 @@ import { FormVariant } from "@/lib/types";
 export default function ResetPassword({
   searchParams,
 }: {
-  searchParams: { error: string; message: string; code: string };
+  searchParams: { success: string; message: string; code: string };
 }) {
-  const { error, message, code } = searchParams;
+  const { success, message, code } = searchParams;
 
   return (
-    <AuthPageContainer>
-      {error && <AuthMessage error={error === "true"} message={message} />}
+    <AuthPageLayout>
+      {message && (
+        <AuthMessage success={success === "true"} message={message} />
+      )}
       <FormContainer>
         <Logo />
         <FormHeader variant={FormVariant.RESET_PASSWORD} />
         <ResetPasswordForm code={code} />
       </FormContainer>
-    </AuthPageContainer>
+    </AuthPageLayout>
   );
 }
