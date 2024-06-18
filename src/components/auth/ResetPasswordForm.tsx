@@ -20,7 +20,7 @@ import {
 } from "../ui/Form";
 import { Input } from "../ui/Input";
 import FormFieldErrorMessage from "./FormFieldErrorMessage";
-import FormSubmissionButton from "./FormSubmissionButton";
+import FormSubmitButton from "./FormSubmitButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 import { FormVariant } from "@/lib/types";
 
@@ -140,7 +140,7 @@ export default function ResetPasswordForm({ code }: ResetPasswordFormProps) {
             </FormItem>
           )}
         />
-        <FormSubmissionButton
+        <FormSubmitButton
           className="mt-6"
           variant={FormVariant.RESET_PASSWORD}
           isSubmitting={isSubmitting}

@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { SESSION_TOKEN } from "./lib/constants";
 
-const protectedRoutes = ["/dashboard/*"];
+const protectedRoutes = ["/dashboard"];
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;

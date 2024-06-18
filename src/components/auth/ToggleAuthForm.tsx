@@ -7,27 +7,21 @@ type ToggleAuthFormProps = {
 
 export default function ToggleAuthForm({ variant }: ToggleAuthFormProps) {
   return (
-    <div className="relative mt-10">
+    <div className="relative mt-7 rounded-sm">
       {variant === FormVariant.SIGN_UP ? (
-        <p className="text-center text-sm text-foreground">
-          Already have an account?{" "}
-          <Link
-            className="inline-flex items-center font-medium hover:underline"
-            href={"/login"}
-          >
-            <span>Log in</span>
-          </Link>
-        </p>
+        <Link
+          className="text-center text-sm text-primary hover:underline"
+          href={"/login"}
+        >
+          <span>Already have an account? Log in</span>
+        </Link>
       ) : (
-        <p className="text-center text-sm text-foreground">
-          Don&apos;t have an account?{" "}
-          <Link
-            className="inline-flex items-center font-medium hover:underline"
-            href={"/signup"}
-          >
-            <span>Sign up</span>
-          </Link>
-        </p>
+        <Link
+          className="text-center text-sm text-primary hover:underline"
+          href={"/signup"}
+        >
+          <span>Don&apos;t have an account? Sign up</span>
+        </Link>
       )}
     </div>
   );

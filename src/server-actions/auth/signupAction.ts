@@ -4,28 +4,27 @@ import { GENERIC_ERROR_MESSAGE } from "@/lib/constants";
 import { signUpSchema } from "@/lib/formValidators";
 import { setSessionToken } from "@/lib/setSessionToken";
 import {
-  seperateFullNameIntoFirstAndLastName,
+  applyNameCapitalizationStrategy,
   trimAndLowercaseText,
 } from "@/lib/textFormatters";
 import { TSignUpSchema } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function signupAction(values: TSignUpSchema) {
-  const { error } = signUpSchema.safeParse(values);
+export async function signupAction(formData: TSignUpSchema) {
+  const { error } = signUpSchema.safeParse(formData);
   if (error) {
     return { errors: error.format() };
   }
 
-  const { full_name, email, password } = values;
-
-  const [first_name, last_name] =
-    seperateFullNameIntoFirstAndLastName(full_name);
+  const { first_name, last_name, email, password } = formData;
   const formattedEmail = trimAndLowercaseText(email);
+  const formattedFirstName = applyNameCapitalizationStrategy(first_name.trim());
+  const formattedLastName = applyNameCapitalizationStrategy(last_name.trim());
 
-  const formValues = {
-    first_name,
-    last_name,
+  const values = {
+    first_name: formattedFirstName,
+    last_name: formattedLastName,
     email: formattedEmail,
     password: password.trim(),
   };
@@ -37,7 +36,7 @@ export async function signupAction(values: TSignUpSchema) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formValues),
+      body: JSON.stringify(values),
     },
   );
 

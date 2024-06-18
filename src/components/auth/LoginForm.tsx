@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/Form";
 import { Input } from "../ui/Input";
 import FormFieldErrorMessage from "./FormFieldErrorMessage";
-import FormSubmissionButton from "./FormSubmissionButton";
+import FormSubmitButton from "./FormSubmitButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 import { FormVariant } from "@/lib/types";
 import { Checkbox } from "../ui/checkbox";
@@ -90,7 +90,7 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <FormSubmissionButton
+        <FormSubmitButton
           className="mt-6"
           variant={FormVariant.LOG_IN}
           isSubmitting={isSubmitting}

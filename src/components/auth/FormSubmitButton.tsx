@@ -1,4 +1,4 @@
-import { getFormSubmissionButtonText } from "@/lib/formHelpers";
+import { getFormSubmitButtonText } from "@/lib/formHelpers";
 import { FormVariant } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { LuLoader2 } from "react-icons/lu";
@@ -10,12 +10,12 @@ type FormSubmissionButtonProps = {
   className?: string;
 };
 
-export default function FormSubmissionButton({
+export default function FormSubmitButton({
   variant,
   isSubmitting,
   className,
 }: FormSubmissionButtonProps) {
-  const { buttonText } = getFormSubmissionButtonText(variant);
+  const { buttonText } = getFormSubmitButtonText(variant);
 
   return (
     <div className={cn(className)}>

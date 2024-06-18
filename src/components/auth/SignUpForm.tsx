@@ -3,7 +3,7 @@
 import { Collapsible, CollapsibleContent } from "@/components/ui/Collapsible";
 import { useSignupForm } from "@/hooks/useSignupForm";
 import {
-  applyFullNameFormatting,
+  applyNameFormatting,
   checkForEmailInPassword,
   getFieldErrorStyle,
   isFieldDirty,
@@ -22,7 +22,7 @@ import {
 } from "../ui/Form";
 import { Input } from "../ui/Input";
 import FormFieldErrorMessage from "./FormFieldErrorMessage";
-import FormSubmissionButton from "./FormSubmissionButton";
+import FormSubmitButton from "./FormSubmitButton";
 import PasswordVisibilityToggle from "./PasswordVisibilityToggle";
 import { FormVariant } from "@/lib/types";
 
@@ -38,17 +38,36 @@ export default function SignUpForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
         <FormField
           control={form.control}
-          name="full_name"
+          name="first_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Your name</FormLabel>
+              <FormLabel>First name</FormLabel>
               <FormControl className="mt-0.5">
                 <Input
                   className={cn(getFieldErrorStyle(form, field))}
-                  placeholder="First and last name"
+                  placeholder="Enter your first name"
                   disabled={isSubmitting}
                   {...field}
-                  onChange={(e) => applyFullNameFormatting(e, field)}
+                  onChange={(e) => applyNameFormatting(e, field)}
+                />
+              </FormControl>
+              <FormFieldErrorMessage form={form} field={"full_name"} />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="last_name"
+          render={({ field }) => (
+            <FormItem className="mt-4">
+              <FormLabel>Last name</FormLabel>
+              <FormControl className="mt-0.5">
+                <Input
+                  className={cn(getFieldErrorStyle(form, field))}
+                  placeholder="Enter your last name"
+                  disabled={isSubmitting}
+                  {...field}
+                  onChange={(e) => applyNameFormatting(e, field)}
                 />
               </FormControl>
               <FormFieldErrorMessage form={form} field={"full_name"} />
@@ -140,7 +159,7 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
-        <FormSubmissionButton
+        <FormSubmitButton
           className="mt-6"
           variant={FormVariant.SIGN_UP}
           isSubmitting={isSubmitting}

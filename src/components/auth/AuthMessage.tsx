@@ -10,7 +10,7 @@ export default function AuthMessage({ success, message }: AuthMessageProps) {
   return (
     <div
       className={cn(
-        "mb-6 w-full max-w-[450px] rounded-[8px] border border-destructive px-5 py-3 shadow-[inset_0px_0px_0px_4px_rgba(252,50,50,.3)]",
+        "mb-6 w-full max-w-[350px] rounded-[8px] border border-destructive px-5 py-3 shadow-[inset_0px_0px_0px_4px_rgba(252,50,50,.3)]",
         {
           "border-green-700 shadow-[inset_0px_0px_0px_4px_rgba(50,252,50,.2)]":
             success,

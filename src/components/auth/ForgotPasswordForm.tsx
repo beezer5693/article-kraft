@@ -6,7 +6,7 @@ import { getFieldErrorStyle } from "@/lib/formHelpers";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/Form";
 import { Input } from "../ui/Input";
 import FormFieldErrorMessage from "./FormFieldErrorMessage";
-import FormSubmissionButton from "./FormSubmissionButton";
+import FormSubmitButton from "./FormSubmitButton";
 import { FormVariant } from "@/lib/types";
 
 export default function ForgotPasswordForm() {
@@ -34,7 +34,7 @@ export default function ForgotPasswordForm() {
             </FormItem>
           )}
         />
-        <FormSubmissionButton
+        <FormSubmitButton
           className={cn("mt-6")}
           variant={FormVariant.FORGOT_PASSWORD}
           isSubmitting={isSubmitting}

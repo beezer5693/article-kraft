@@ -11,13 +11,8 @@ export const loginSchema = z.object({
 
 export const signUpSchema = z
   .object({
-    full_name: z
-      .string()
-      .min(1, "Full name is a required field")
-      .refine(
-        (value) => /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/.test(value),
-        "First and last name required",
-      ),
+    first_name: z.string().min(1, "First name is a required field"),
+    last_name: z.string().min(1, "Last name is a required field"),
     email: z
       .string()
       .min(1, "Email is a required field")

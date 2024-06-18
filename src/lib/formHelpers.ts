@@ -33,7 +33,7 @@ export function checkConfirmPasswordMatchesPassword(form: Form): boolean {
   );
 }
 
-export function getFormSubmissionButtonText(variant: FormVariant): {
+export function getFormSubmitButtonText(variant: FormVariant): {
   buttonText: string;
 } {
   let buttonText = "";
@@ -86,26 +86,27 @@ export function getFormHeader(variant: FormVariant): {
   return { formTitle, formDescription };
 }
 
-function formatFullName(value: string): string {
+function formatName(value: string): string {
   return value
     .replace(/\s{2,}/g, " ") // Replace multiple spaces with a single space
-    .replace(/[^a-zA-Z\s]+/g, "") // Remove any non-alphabetical characters except spaces
+    .replace(/[^a-zA-Z\s'-]+/g, "") // Remove any non-alphabetical characters except spaces, hyphens and apostrophess
     .replace(/^ +/, ""); // Remove spaces at the beginning
 }
 
-export function applyFullNameFormatting(
+export function applyNameFormatting(
   e: ChangeEvent<HTMLInputElement>,
   field: Field,
 ): string {
   const { value } = e.target;
-  field.onChange(formatFullName(value));
+  field.onChange(formatName(value));
   return e.target.value.trim();
 }
 
 export function displayFormErrorsFromServerAction(
   errors: ZodFormattedError<
     {
-      full_name: string;
+      first_name: string;
+      last_name: string;
       email: string;
       password: string;
     },
@@ -113,10 +114,16 @@ export function displayFormErrorsFromServerAction(
   >,
   form: UseFormReturn<any, any, undefined>,
 ) {
-  if (errors.full_name) {
-    form.setError("full_name", {
+  if (errors.first_name) {
+    form.setError("first_name", {
       type: "server",
-      message: `${errors.full_name._errors[0]}`,
+      message: `${errors.first_name._errors[0]}`,
+    });
+  }
+  if (errors.last_name) {
+    form.setError("last_name", {
+      type: "server",
+      message: `${errors.last_name._errors[0]}`,
     });
   }
   if (errors.email) {
